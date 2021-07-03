@@ -5,12 +5,16 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.onlinebookshop.entity.User;
@@ -30,18 +34,33 @@ public class UserController {
 	}
 
 	@PutMapping("users/{username}")
-	public User updateDetails(@Valid @RequestBody User user, @PathVariable String username) {
-		// Not tested yet
+	public ResponseEntity<User> updateDetails(@Valid @RequestBody User user, @PathVariable String username) {
 		Optional<User> userOpt = userService.findByUserName(username);
 
 		User existedUser = userOpt.get();
+		
 		existedUser.setUserName(user.getUserName());
 		existedUser.setFullName(user.getFullName());
 		existedUser.setGender(user.getGender());
 		existedUser.setPhoneNumber(user.getPhoneNumber());
 		existedUser.setAddress(user.getAddress());
 		existedUser.setPhoto(user.getPhoto());
+		existedUser.setRoles(user.getRoles());
 
-		return userService.saveUser(user);
+		return new ResponseEntity<User>(userService.saveUser(existedUser), HttpStatus.OK);
+	}
+	
+	@PutMapping("user/password/{username}")
+	public ResponseEntity<User> changePassword(@Valid @RequestBody User user, @PathVariable String username){
+		Optional<User> userOpt = userService.findByUserName(username);
+		System.out.println("Username: " + username);
+		User existedUser = userOpt.get();
+		System.out.println("Username: " + user.getUserName());
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+		existedUser.setPassword(encodedPassword);
+
+		return new ResponseEntity<User>(userService.saveUser(existedUser), HttpStatus.OK);
 	}
 }
