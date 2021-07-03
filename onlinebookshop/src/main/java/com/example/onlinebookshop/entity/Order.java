@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="orders", schema="public")
 public class Order {
@@ -39,22 +41,23 @@ public class Order {
 	private Collection<OrderDetail> orderDetail;
 	
 	@ManyToOne
-	@JoinColumn(name="customer_id")
-	private Customer customer;
+	@JoinColumn(name="username")
+	@JsonIgnore
+	private User user;
 	
 	public Order() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Order(Long orderId, Date orderDate, String orderAddress, String description,
-			Collection<OrderDetail> orderDetail, Customer customer) {
+			Collection<OrderDetail> orderDetail, User user) {
 		super();
 		this.orderId = orderId;
 		this.orderDate = orderDate;
 		this.orderAddress = orderAddress;
 		this.description = description;
 		this.orderDetail = orderDetail;
-		this.customer = customer;
+		this.user = user;
 	}
 
 	public Long getOrderId() {
@@ -97,11 +100,13 @@ public class Order {
 		this.orderDetail = orderDetail;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public User getUser() {
+		return user;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setUser(User user) {
+		this.user = user;
 	}
+
+	
 }

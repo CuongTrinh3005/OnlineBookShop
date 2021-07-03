@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="orderDetails", schema="public")
 public class OrderDetail {
@@ -46,10 +48,12 @@ public class OrderDetail {
 	
 	@ManyToOne
 	@JoinColumn(name="order_id", insertable = false, updatable = false)
+	@JsonIgnore
 	private Order order;
 	
 	@ManyToOne
 	@JoinColumn(name="book_id", insertable = false, updatable = false)
+	@JsonIgnore
 	private Book book;
 	
 	public OrderDetail() {

@@ -15,6 +15,8 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="ratings", schema="public")
 public class Ratings {
@@ -31,15 +33,15 @@ public class Ratings {
 	@Embeddable
 	public static class RatingId implements Serializable{
 		private static final long serialVersionUID = 1L;
-		@Column(name = "customer_id")
-		private String customerId;
+		@Column(name = "username")
+		private String username;
 		@Column(name = "book_id")
 		private String bookId ;
-		public String getCustomerId() {
-			return customerId;
+		public String getUsername() {
+			return username;
 		}
-		public void setCustomerId(String customerId) {
-			this.customerId = customerId;
+		public void setUsername(String username) {
+			this.username = username;
 		}
 		public String getBookId() {
 			return bookId;
@@ -51,23 +53,25 @@ public class Ratings {
 	
 	@ManyToOne
 	@JoinColumn(name="book_id", insertable = false, updatable = false)
+	@JsonIgnore
 	private Book book;
 	
 	@ManyToOne
-	@JoinColumn(name="customer_id", insertable = false, updatable = false)
-	private Customer customer;
+	@JoinColumn(name="username", insertable = false, updatable = false)
+	@JsonIgnore
+	private User user;
 	
 	public Ratings() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ratings(RatingId ratingId, Date dateRating, Integer levelRating, Book book, Customer customer) {
+	public Ratings(RatingId ratingId, Date dateRating, Integer levelRating, Book book, User user) {
 		super();
 		this.ratingId = ratingId;
 		this.dateRating = dateRating;
 		this.levelRating = levelRating;
 		this.book = book;
-		this.customer = customer;
+		this.user = user;
 	}
 
 	public RatingId getRatingId() {
@@ -102,12 +106,14 @@ public class Ratings {
 		this.book = book;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public User getUser() {
+		return user;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setUser(User user) {
+		this.user = user;
 	}
+
+	
 
 }
