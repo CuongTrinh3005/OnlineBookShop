@@ -50,13 +50,14 @@ public class UserController {
 		return new ResponseEntity<User>(userService.saveUser(existedUser), HttpStatus.OK);
 	}
 	
-	@PutMapping("user/password/{username}")
-	public ResponseEntity<User> changePassword(@Valid @RequestBody User user, @PathVariable String username){
+	@PutMapping("users/password/{username}")
+	public ResponseEntity<User> changePassword(@Valid @RequestBody User user, @PathVariable String username) {
 		Optional<User> userOpt = userService.findByUserName(username);
-		System.out.println("Username: " + username);
+
 		User existedUser = userOpt.get();
-		System.out.println("Username: " + user.getUserName());
 		
+		System.out.println("Username: " + username);
+		System.out.println("Password: "+ user.getPassword());
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
 		existedUser.setPassword(encodedPassword);

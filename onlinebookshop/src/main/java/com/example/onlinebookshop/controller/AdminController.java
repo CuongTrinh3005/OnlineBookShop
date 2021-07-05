@@ -17,30 +17,29 @@ import com.example.onlinebookshop.entity.User;
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.service.impl.UserService;
 
-@CrossOrigin(origins="*", maxAge=3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/admin")
 public class AdminController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("users")
-	public List<User> getAllUsers(){
+	public List<User> getAllUsers() {
 		return userService.getAllUsers();
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("users/{username}")
-	public void deleteUser(@PathVariable String username) throws ResourceNotFoundException{
+	public void deleteUser(@PathVariable String username) throws ResourceNotFoundException {
 		Optional<User> userOpt = userService.findByUserName(username);
-		if(userOpt.isPresent()){
-			User user = userOpt.get();
-			if(user.getOrders().size()==0 && user.getRatings().size()==0)
-				userService.delete(user);
-			else
-				throw new RuntimeException("Not allow to delete user having orders or ratings");
-		}	
+
+		User user = userOpt.get();
+		if (user.getOrders().size() == 0 && user.getRatings().size() == 0)
+			userService.delete(user);
+		else
+			throw new RuntimeException("Not allow to delete user having orders or ratings");
 	}
 }

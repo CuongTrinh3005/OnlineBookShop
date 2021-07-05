@@ -1,6 +1,8 @@
 package com.example.onlinebookshop.entity;
 
 import java.util.Collection;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,26 +10,28 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="categories", schema="public")
+@Table(name = "categories", schema = "public")
 public class Category {
 	@Id
-	@Column(name="category_id")
+	@Column(name = "category_id")
 	private String categoryId;
-	@Column(name="category_name")
+	@Column(name = "category_name")
+	@NotBlank
 	private String categoryName;
-	@Column(name="description")
+	@Column(name = "description")
 	private String description;
 
-	@OneToMany(mappedBy="category", fetch=FetchType.EAGER)
-	private Collection<Book> books;
-	
+	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+	private Set<Book> books;
+
 	public Category() {
-		
+
 	}
 
-	public Category(String categoryId, String categoryName, String description, Collection<Book> books) {
+	public Category(String categoryId, String categoryName, String description, Set<Book> books) {
 		super();
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
@@ -43,14 +47,6 @@ public class Category {
 		this.categoryId = categoryId;
 	}
 
-	public String getName() {
-		return categoryName;
-	}
-
-	public void setName(String name) {
-		this.categoryName = name;
-	}
-
 	public String getCategoryName() {
 		return categoryName;
 	}
@@ -59,11 +55,11 @@ public class Category {
 		this.categoryName = categoryName;
 	}
 
-	public Collection<Book> getBooks() {
+	public Set<Book> getBooks() {
 		return books;
 	}
 
-	public void setBooks(Collection<Book> books) {
+	public void setBooks(Set<Book> books) {
 		this.books = books;
 	}
 
@@ -73,5 +69,22 @@ public class Category {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Category other = (Category) obj;
+		return Objects.equals(categoryId, other.categoryId);
+	}
+
+	@Override
+	public String toString() {
+		return "Category [" + ", id=" + categoryId + ", name=" + categoryName + "description: " + description + "]";
 	}
 }

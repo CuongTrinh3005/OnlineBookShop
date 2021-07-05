@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="books", schema="public")
 public class Book {
@@ -59,14 +61,17 @@ public class Book {
 	
 	@ManyToOne
 	@JoinColumn(name="category_id")
+	@JsonIgnore
 	private Category category;
 	
 	@ManyToOne
 	@JoinColumn(name="author_id")
+	@JsonIgnore
 	private Author author;
 	
 	@ManyToOne
 	@JoinColumn(name="publisher_id")
+	@JsonIgnore
 	private Publisher publisher;
 	
 	@OneToMany(mappedBy="book", fetch=FetchType.EAGER)
