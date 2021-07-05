@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.onlinebookshop.entity.User;
+import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.repository.UserRepository;
 import com.example.onlinebookshop.service.impl.UserService;
 
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Optional<User> findByUserName(String userName) throws UsernameNotFoundException{
 		User user = userRepository.findByUsername(userName)
-				.orElseThrow(()-> new UsernameNotFoundException(userName + " not found"));
+				.orElseThrow(()-> new ResourceNotFoundException(userName + " not found"));
 		return Optional.of(user);				
 	}
 

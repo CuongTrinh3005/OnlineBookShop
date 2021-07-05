@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.onlinebookshop.entity.User;
+import com.example.onlinebookshop.exception.CustomException;
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.service.impl.UserService;
 
@@ -40,6 +41,6 @@ public class AdminController {
 		if (user.getOrders().size() == 0 && user.getRatings().size() == 0)
 			userService.delete(user);
 		else
-			throw new RuntimeException("Not allow to delete user having orders or ratings");
+			throw new CustomException("Not allow to delete user having orders or ratings");
 	}
 }

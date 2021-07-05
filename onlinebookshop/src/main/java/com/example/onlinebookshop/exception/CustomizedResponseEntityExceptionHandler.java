@@ -24,11 +24,31 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
 	@ExceptionHandler(ResourceNotFoundException.class)
 	// override method of ResponseEntityExceptionHandler class
-	public final ResponseEntity<Object> handleUserNotFoundExceptions(ResourceNotFoundException ex, WebRequest request) {
+	public final ResponseEntity<Object> handleResourceNotFoundExceptions(ResourceNotFoundException ex, WebRequest request) {
 		// creating exception response structure
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
 		// returning exception structure and Not Found status
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(ResourceAlreadyExistedException.class)
+	// override method of ResponseEntityExceptionHandler class
+	public final ResponseEntity<Object> handleResourceAlreadyExistedException(ResourceAlreadyExistedException ex, WebRequest request) {
+		// creating exception response structure
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+				request.getDescription(false));
+		// returning exception structure and Not Found status
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(CustomException.class)
+	// override method of ResponseEntityExceptionHandler class
+	public final ResponseEntity<Object> handleCustomException(CustomException ex, WebRequest request) {
+		// creating exception response structure
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+				request.getDescription(false));
+		// returning exception structure and Not Found status
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 }

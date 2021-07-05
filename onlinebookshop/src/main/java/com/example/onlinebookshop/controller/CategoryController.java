@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.onlinebookshop.entity.Category;
-import com.example.onlinebookshop.entity.User;
+import com.example.onlinebookshop.exception.CustomException;
+import com.example.onlinebookshop.exception.ResourceAlreadyExistedException;
 import com.example.onlinebookshop.service.impl.CategoryService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -52,7 +53,8 @@ public class CategoryController {
 	@PostMapping("categories")
 	public Category saveCategory(@Valid @RequestBody Category category) {
 		Boolean existed = categoryService.existsById(category.getCategoryId());
-		if(existed) throw new RuntimeException("Resource already existed");
+//		if(existed) throw new RuntimeException("Resource already existed");
+		if(existed) throw new ResourceAlreadyExistedException("Resource already existed");
 		
 		return categoryService.saveCategory(category);
 	}
@@ -81,6 +83,6 @@ public class CategoryController {
 		if (category.getBooks().size() == 0)
 			categoryService.delete(category);
 		else
-			throw new RuntimeException("Not allow to delete category having books");
+			throw new CustomException("Not allow to delete category having books");
 	}
 }
