@@ -38,12 +38,6 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Boolean existsByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void delete(Category category) {
 		categoryRepository.delete(category);
 	}
@@ -51,5 +45,10 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public Category saveCategory(Category category) {
 		return categoryRepository.save(category);
+	}
+
+	@Override
+	public Boolean existsById(String id) {
+		return categoryRepository.existsByCategoryId(id);
 	}
 }

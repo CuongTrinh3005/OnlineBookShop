@@ -12,7 +12,7 @@ public interface CategoryService {
 	
 	Optional<Category> findById(String id);
 
-	Boolean existsByName(String name);
+	Boolean existsById(String id);
 
 	void delete(Category category);
 	

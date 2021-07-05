@@ -51,6 +51,9 @@ public class CategoryController {
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("categories")
 	public Category saveCategory(@Valid @RequestBody Category category) {
+		Boolean existed = categoryService.existsById(category.getCategoryId());
+		if(existed) throw new RuntimeException("Resource already existed");
+		
 		return categoryService.saveCategory(category);
 	}
 

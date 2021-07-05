@@ -8,5 +8,5 @@ import com.example.onlinebookshop.entity.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, String> {
 	Category findByCategoryName(String categoryName);
-
+	Boolean existsByCategoryId(String categoryId);
 }
