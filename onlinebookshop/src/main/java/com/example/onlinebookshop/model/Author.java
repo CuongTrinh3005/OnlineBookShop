@@ -1,6 +1,8 @@
-package com.example.onlinebookshop.entity;
+package com.example.onlinebookshop.model;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="authors", schema="public")
@@ -25,20 +30,20 @@ public class Author {
 	@Column(name="phone_number")
 	private String phoneNumber;
 	
-	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
-	private Collection<Book> books;
+//	@ManyToMany(mappedBy = "authors")
+//    private Set<Book> books = new HashSet<>();
 	
 	public Author() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public Author(Integer authorId, String authorName, String address, String phoneNumber, Collection<Book> books) {
+	
+	public Author(Integer authorId, String authorName, String address, String phoneNumber, Set<Book> books) {
 		super();
 		this.authorId = authorId;
 		this.authorName = authorName;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		this.books = books;
+//		this.books = books;
 	}
 
 	public Integer getAuthorId() {
@@ -73,11 +78,12 @@ public class Author {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Collection<Book> getBooks() {
-		return books;
-	}
-
-	public void setBooks(Collection<Book> books) {
-		this.books = books;
-	}
+//	public Set<Book> getBooks() {
+//		return books;
+//	}
+//
+//	public void setBooks(Set<Book> books) {
+//		this.books = books;
+//	}
+	
 }

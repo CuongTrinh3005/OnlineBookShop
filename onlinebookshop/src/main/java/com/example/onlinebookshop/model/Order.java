@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.entity;
+package com.example.onlinebookshop.model;
 
 import java.util.Collection;
 import java.util.Date;

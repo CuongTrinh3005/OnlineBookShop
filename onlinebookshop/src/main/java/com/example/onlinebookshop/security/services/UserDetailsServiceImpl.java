@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.onlinebookshop.entity.User;
+import com.example.onlinebookshop.model.User;
 import com.example.onlinebookshop.repository.UserRepository;
 
 @Service

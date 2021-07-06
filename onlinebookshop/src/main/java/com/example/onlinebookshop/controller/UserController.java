@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.onlinebookshop.entity.User;
+import com.example.onlinebookshop.model.User;
 import com.example.onlinebookshop.service.impl.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)

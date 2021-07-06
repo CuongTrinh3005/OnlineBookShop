@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.entity;
+package com.example.onlinebookshop.model;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "categories", schema = "public")
@@ -25,6 +27,7 @@ public class Category {
 	private String description;
 
 	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<Book> books;
 
 	public Category() {

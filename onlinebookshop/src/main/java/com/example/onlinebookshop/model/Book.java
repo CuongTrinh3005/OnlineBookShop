@@ -1,7 +1,9 @@
-package com.example.onlinebookshop.entity;
+package com.example.onlinebookshop.model;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,11 +12,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,14 +36,18 @@ public class Book {
 	@Column(name="book_id")
 	private Long bookId;
 	@Column(name="book_name")
+	@NotBlank
 	private String bookName;
 	@Column(name="unit_price")
+	@DecimalMin(value="0", message="Price must be not under 0")
 	private Float unitPrice;
 	@Column(name="quantity")
+	@DecimalMin(value="0", message="Quantity must be not under 0")
 	private Long quantity;
 	@Column(name="discount")
+	@DecimalMin(value="0", message="Discount must be not under 0%")
+	@DecimalMax(value="0.7", message="Discount must be not over 70%")
 	private Float discount;
-//	private String categoryId;
 	@Column(name="photo")
 	private byte[] photo;
 	@Column(name="description")
@@ -43,6 +55,7 @@ public class Book {
 	@Column(name="specification")
 	private String specification;
 	@Column(name="view_count")
+	@DecimalMin(value="0", message="No. view must be not under 0")
 	private Long viewCount;
 	@Column(name="special")
 	private Boolean special;
@@ -51,13 +64,13 @@ public class Book {
 	@Column(name="date_in")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Past(message="Not allow to choose day in future")
 	private Date dateIn;
 	@Column(name="date_update")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Past(message="Not allow to choose day in future")
 	private Date dateUpdate;
-//	private Integer authorId;
-//	private Integer publisherId;
 	
 	@ManyToOne
 	@JoinColumn(name="category_id")
@@ -65,14 +78,15 @@ public class Book {
 	private Category category;
 	
 	@ManyToOne
-	@JoinColumn(name="author_id")
-	@JsonIgnore
-	private Author author;
-	
-	@ManyToOne
 	@JoinColumn(name="publisher_id")
 	@JsonIgnore
 	private Publisher publisher;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "written",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private Set<Author> authors = new HashSet<>();
 	
 	@OneToMany(mappedBy="book", fetch=FetchType.EAGER)
 	private Collection<OrderDetail> orderDetails;
@@ -84,10 +98,16 @@ public class Book {
 		
 	}
 
-	public Book(Long bookId, String bookName, Float unitPrice, Long quantity, Float discount, byte[] photo,
-			String description, String specification, Long viewCount, Boolean special, Boolean available, Date dateIn,
-			Date dateUpdate, Category category, Author author, Publisher publisher,
-			Collection<OrderDetail> orderDetails, Collection<Ratings> ratings) {
+	public Book(Long bookId, @NotBlank String bookName,
+			@DecimalMin(value = "0", message = "Price must be not under 0") Float unitPrice,
+			@DecimalMin(value = "0", message = "Quantity must be not under 0") Long quantity,
+			@DecimalMin(value = "0", message = "Discount must be not under 0%") @DecimalMax(value = "0.7", message = "Discount must be not over 70%") Float discount,
+			byte[] photo, String description, String specification,
+			@DecimalMin(value = "0", message = "No. view must be not under 0") Long viewCount, Boolean special,
+			Boolean available, @Past(message = "Not allow to choose day in future") Date dateIn,
+			@Past(message = "Not allow to choose day in future") Date dateUpdate, Category category,
+			Publisher publisher, Set<Author> authors, Collection<OrderDetail> orderDetails,
+			Collection<Ratings> ratings) {
 		super();
 		this.bookId = bookId;
 		this.bookName = bookName;
@@ -103,8 +123,8 @@ public class Book {
 		this.dateIn = dateIn;
 		this.dateUpdate = dateUpdate;
 		this.category = category;
-		this.author = author;
 		this.publisher = publisher;
+		this.authors = authors;
 		this.orderDetails = orderDetails;
 		this.ratings = ratings;
 	}
@@ -221,12 +241,12 @@ public class Book {
 		this.category = category;
 	}
 
-	public Author getAuthor() {
-		return author;
+	public Set<Author> getAuthors() {
+		return authors;
 	}
 
-	public void setAuthor(Author author) {
-		this.author = author;
+	public void setAuthors(Set<Author> authors) {
+		this.authors = authors;
 	}
 
 	public Publisher getPublisher() {

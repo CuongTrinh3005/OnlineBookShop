@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.entity;
+package com.example.onlinebookshop.model;
 
 import java.util.Collection;
 
@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="publishers", schema="public")
@@ -26,6 +28,7 @@ public class Publisher {
 	private String phoneNumber;
 	
 	@OneToMany(mappedBy="publisher", fetch=FetchType.EAGER)
+	@JsonIgnore
 	private Collection<Book> books;
 	
 	public Publisher() {

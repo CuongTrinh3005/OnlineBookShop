@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.onlinebookshop.entity.User;
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
+import com.example.onlinebookshop.model.User;
 import com.example.onlinebookshop.repository.UserRepository;
 import com.example.onlinebookshop.service.impl.UserService;
 

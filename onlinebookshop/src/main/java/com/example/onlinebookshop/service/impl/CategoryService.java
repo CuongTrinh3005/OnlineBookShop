@@ -3,7 +3,7 @@ package com.example.onlinebookshop.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.onlinebookshop.entity.Category;
+import com.example.onlinebookshop.model.Category;
 
 public interface CategoryService {
 	List<Category> getAllCategries();

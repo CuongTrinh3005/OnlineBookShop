@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.entity;
+package com.example.onlinebookshop.model;
 
 import java.io.Serializable;
 
@@ -32,6 +32,12 @@ public class OrderDetail {
 		private Long orderId;
 		@Column(name = "book_id")
 		private Long bookId ;
+		
+//		public OrderDetailID(Long orderId, Long bookId) {
+//			super();
+//			this.orderId = orderId;
+//			this.bookId = bookId;
+//		}
 		public Long getOrderId() {
 			return orderId;
 		}

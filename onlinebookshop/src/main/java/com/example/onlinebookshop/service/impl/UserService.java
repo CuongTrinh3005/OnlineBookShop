@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.onlinebookshop.entity.User;
+import com.example.onlinebookshop.model.User;
 
 @Service
 public interface UserService {
