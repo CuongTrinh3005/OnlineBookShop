@@ -16,4 +16,6 @@ public interface BookService{
 	BookDTO convertBookToDTO(Book book);
 	Book convertBookDtoToBook(BookDTO bookDTO);
 	Book saveBook(BookDTO bookDTO);
+	Book updateBook(BookDTO bookDTO, Long id);
+	void deleteBook(Book book);
 }

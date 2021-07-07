@@ -3,8 +3,10 @@ package com.example.onlinebookshop.model;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,73 +31,71 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="books", schema="public")
+@Table(name = "books", schema = "public")
 public class Book {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="book_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "book_id")
 	private Long bookId;
-	@Column(name="book_name")
+	@Column(name = "book_name")
 	@NotBlank
 	private String bookName;
-	@Column(name="unit_price")
-	@DecimalMin(value="0", message="Price must be not under 0")
+	@Column(name = "unit_price")
+	@DecimalMin(value = "0", message = "Price must be not under 0")
 	private Float unitPrice;
-	@Column(name="quantity")
-	@DecimalMin(value="0", message="Quantity must be not under 0")
+	@Column(name = "quantity")
+	@DecimalMin(value = "0", message = "Quantity must be not under 0")
 	private Long quantity;
-	@Column(name="discount")
-	@DecimalMin(value="0", message="Discount must be not under 0%")
-	@DecimalMax(value="0.7", message="Discount must be not over 70%")
+	@Column(name = "discount")
+	@DecimalMin(value = "0", message = "Discount must be not under 0%")
+	@DecimalMax(value = "0.7", message = "Discount must be not over 70%")
 	private Float discount;
-	@Column(name="photo")
+	@Column(name = "photo")
 	private byte[] photo;
-	@Column(name="description")
+	@Column(name = "description")
 	private String description;
-	@Column(name="specification")
+	@Column(name = "specification")
 	private String specification;
-	@Column(name="view_count")
-	@DecimalMin(value="0", message="No. view must be not under 0")
+	@Column(name = "view_count")
+	@DecimalMin(value = "0", message = "No. view must be not under 0")
 	private Long viewCount;
-	@Column(name="special")
+	@Column(name = "special")
 	private Boolean special;
-	@Column(name="available")
+	@Column(name = "available")
 	private Boolean available;
-	@Column(name="date_in")
+	@Column(name = "date_in")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@Past(message="Not allow to choose day in future")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Past(message = "Not allow to choose day in future")
 	private Date dateIn;
-	@Column(name="date_update")
+	@Column(name = "date_update")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@Past(message="Not allow to choose day in future")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Past(message = "Not allow to choose day in future")
 	private Date dateUpdate;
-	
+
 	@ManyToOne
-	@JoinColumn(name="category_id")
+	@JoinColumn(name = "category_id")
 	@JsonIgnore
 	private Category category;
-	
+
 	@ManyToOne
-	@JoinColumn(name="publisher_id")
-	@JsonIgnore
+	@JoinColumn(name = "publisher_id")
+	// @JsonIgnore
 	private Publisher publisher;
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "written",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors = new HashSet<>();
-	
-	@OneToMany(mappedBy="book", fetch=FetchType.EAGER)
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinTable(name = "written", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
+	private Set<Author> authors = new HashSet<>();
+
+	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
 	private Collection<OrderDetail> orderDetails;
-	
-	@OneToMany(mappedBy="book", fetch=FetchType.EAGER)
+
+	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
 	private Collection<Ratings> ratings;
-	
+
 	public Book() {
-		
+
 	}
 
 	public Book(Long bookId, @NotBlank String bookName,
@@ -271,5 +271,47 @@ public class Book {
 
 	public void setRatings(Collection<Ratings> ratings) {
 		this.ratings = ratings;
+	}
+
+	public void update(Book book) {
+		this.setBookName(book.getBookName());
+		this.setDescription(book.getDescription());
+		this.setDiscount(book.getDiscount());
+		this.setAvailable(book.getAvailable());
+		this.setPhoto(book.getPhoto());
+
+		this.setQuantity(book.getQuantity());
+		this.setUnitPrice(book.getUnitPrice());
+		this.setSpecial(book.getSpecial());
+		this.setSpecification(book.getSpecification());
+		this.setViewCount(book.getViewCount());
+//		this.setDateUpdate(new Date());
+
+		this.setCategory(book.getCategory());
+		this.setAuthors(book.getAuthors());
+
+		this.setPublisher(book.getPublisher());
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(bookId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		return Objects.equals(bookId, other.bookId);
+	}
+
+	@Override
+	public String toString() {
+		return "Book [" + ", id=" + bookId + ", name=" + bookName + "description: " + description + "]";
 	}
 }

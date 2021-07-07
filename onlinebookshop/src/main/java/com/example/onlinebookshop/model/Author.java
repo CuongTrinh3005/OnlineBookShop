@@ -1,20 +1,13 @@
 package com.example.onlinebookshop.model;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="authors", schema="public")
@@ -77,13 +70,4 @@ public class Author {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-
-//	public Set<Book> getBooks() {
-//		return books;
-//	}
-//
-//	public void setBooks(Set<Book> books) {
-//		this.books = books;
-//	}
-	
 }

@@ -1,6 +1,5 @@
 package com.example.onlinebookshop.controller;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -9,9 +8,11 @@ import javax.validation.Valid;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,7 +49,7 @@ public class BookController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("books/{id}")
-	public Book updateBook(@Valid @RequestBody BookDTO bookDTO, @PathVariable Long id) {
+	public ResponseEntity<Book> updateBook(@Valid @RequestBody BookDTO bookDTO, @PathVariable Long id) {
 		Set<ConstraintViolation<BookDTO>> result = validator.validate(bookDTO);
 		if (!result.isEmpty()) {
 			// do here whatever you want with each validation violation.
@@ -56,6 +57,18 @@ public class BookController {
 			throw new CustomException("Check your input");
 		}
 		
-		return bookService.convertBookDtoToBook(bookDTO);
+		return new ResponseEntity<Book>(bookService.updateBook(bookDTO, id), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@DeleteMapping("books/{id}")
+	public void deleteBook(@PathVariable Long id){
+		Optional<Book> bookOtp = bookService.getBookById(id);
+		Book book = bookOtp.get();
+		
+		if(book.getOrderDetails().size()==0 && book.getRatings().size()==0)
+			bookService.deleteBook(book);
+		else
+			throw new CustomException("Can not delete books having in order đetails or ratings!");
 	}
 }

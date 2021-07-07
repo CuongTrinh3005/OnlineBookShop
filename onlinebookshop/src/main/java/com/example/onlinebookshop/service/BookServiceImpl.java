@@ -1,16 +1,11 @@
 package com.example.onlinebookshop.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +14,7 @@ import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.model.Author;
 import com.example.onlinebookshop.model.Book;
 import com.example.onlinebookshop.model.Category;
-import com.example.onlinebookshop.model.OrderDetail;
 import com.example.onlinebookshop.model.Publisher;
-import com.example.onlinebookshop.model.Ratings;
 import com.example.onlinebookshop.model.dto.BookDTO;
 import com.example.onlinebookshop.repository.BookRepository;
 import com.example.onlinebookshop.repository.CategoryRepository;
@@ -119,24 +112,6 @@ public class BookServiceImpl implements BookService {
 			bookDTO.setAuthorIds(authorIds);
 		}
 
-//		List<Ratings> ratings = new ArrayList<>(book.getRatings());
-//		if (ratings.size() > 0) {
-//			String[] ratingIds = new String[ratings.size()];
-//			for (int index = 0; index < ratingIds.length; index++) {
-//				ratingIds[index] = String.valueOf(ratings.get(index).getRatingId());
-//			}
-//			bookDTO.setRatingIds(ratingIds);
-//		}
-
-//		List<OrderDetail> orderDetails = new ArrayList<>(book.getOrderDetails());
-//		if (orderDetails.size() > 0) {
-//			String[] orderDetailIds = new String[orderDetails.size()];
-//
-//			for (int index = 0; index < orderDetailIds.length; index++) {
-//				orderDetailIds[index] = String.valueOf(orderDetails.get(index).getOrderDetailID());
-//			}
-//			bookDTO.setOrderDetailIds(orderDetailIds);
-//		}
 		return bookDTO;
 	}
 
@@ -167,25 +142,46 @@ public class BookServiceImpl implements BookService {
 		List<Integer> listAuthorIds = OnlinebookshopApplication.convertStringArrToIntArr(authorIds);
 		List<Author> listAuthor = authorService.findAllById(listAuthorIds);
 		book.setAuthors(listAuthor.stream().collect(Collectors.toSet()));
-
-//		String[] orderDetaildIds = bookDTO.getOrderDetailIds();
-//		List<Integer> listOrderDetailsIds = OnlinebookshopApplication.convertStringArrToIntArr(orderDetaildIds);
-//		List<OrderDetail> listOrderDetail = 
 		
-//		String[] ratingIds = bookDTO.getRatingIds();
-		
-		if(book.getDateIn()==null){
-			book.setDateIn(new Date());
-		}
-		else{
-			book.setDateUpdate(new Date());
-		}
 		return book;
 	}
 
 	@Override
 	public Book saveBook(BookDTO bookDTO) {
 		Book book = convertBookDtoToBook(bookDTO);
+		book.setDateIn(new Date());
 		return bookRepository.save(book);
 	}
+
+	@Override
+	public Book updateBook(BookDTO bookDTO, Long id) {
+		Book book = getBookById(id).get();
+		BookDTO existedBookDTO = convertBookToDTO(book);
+		
+		existedBookDTO.setBookName(bookDTO.getBookName());
+		existedBookDTO.setCategoryName(bookDTO.getCategoryName());
+		existedBookDTO.setDescription(bookDTO.getDescription());
+		existedBookDTO.setDiscount(bookDTO.getDiscount());
+		existedBookDTO.setAvailable(bookDTO.getAvailable());
+		existedBookDTO.setPhoto(bookDTO.getPhoto());
+		existedBookDTO.setPublisherName(bookDTO.getPublisherName());
+		existedBookDTO.setQuantity(bookDTO.getQuantity());
+		existedBookDTO.setUnitPrice(bookDTO.getUnitPrice());
+		existedBookDTO.setSpecial(bookDTO.getSpecial());
+		existedBookDTO.setSpecification(bookDTO.getSpecification());
+		existedBookDTO.setViewCount(bookDTO.getViewCount());
+		existedBookDTO.setAuthorIds(bookDTO.getAuthorIds());
+		
+		Book updatingBook = convertBookDtoToBook(existedBookDTO);
+		updatingBook.setBookId(id);
+		updatingBook.setDateUpdate(new Date());
+		
+		return bookRepository.save(updatingBook);
+	}
+
+	@Override
+	public void deleteBook(Book book) {
+		bookRepository.delete(book);
+	}
+	
 }
