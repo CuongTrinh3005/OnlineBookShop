@@ -12,6 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="ratings", schema="public")
-public class Ratings {
+public class Rating {
 	@EmbeddedId
 	private RatingId ratingId;
 	
@@ -28,25 +32,39 @@ public class Ratings {
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Date dateRating;
 	@Column(name="level_rating")
-	private Integer levelRating;
+	@DecimalMin(value="0")
+	@DecimalMax(value="5")
+	private Float levelRating;
 	
 	@Embeddable
 	public static class RatingId implements Serializable{
 		private static final long serialVersionUID = 1L;
 		@Column(name = "username")
+		@NotBlank
 		private String username;
 		@Column(name = "book_id")
-		private String bookId ;
+		@NotNull
+		private Long bookId ;
+		
+		public RatingId() {
+			super();
+		}
+		
+		public RatingId(String username, Long bookId) {
+			this.username = username;
+			this.bookId = bookId;
+		}
+		
 		public String getUsername() {
 			return username;
 		}
 		public void setUsername(String username) {
 			this.username = username;
 		}
-		public String getBookId() {
+		public Long getBookId() {
 			return bookId;
 		}
-		public void setBookId(String bookId) {
+		public void setBookId(Long bookId) {
 			this.bookId = bookId;
 		}
 	}
@@ -61,11 +79,11 @@ public class Ratings {
 	@JsonIgnore
 	private User user;
 	
-	public Ratings() {
+	public Rating() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ratings(RatingId ratingId, Date dateRating, Integer levelRating, Book book, User user) {
+	public Rating(RatingId ratingId, Date dateRating, Float levelRating, Book book, User user) {
 		super();
 		this.ratingId = ratingId;
 		this.dateRating = dateRating;
@@ -90,11 +108,11 @@ public class Ratings {
 		this.dateRating = dateRating;
 	}
 
-	public Integer getLevelRating() {
+	public Float getLevelRating() {
 		return levelRating;
 	}
 
-	public void setLevelRating(Integer levelRating) {
+	public void setLevelRating(Float levelRating) {
 		this.levelRating = levelRating;
 	}
 
@@ -113,7 +131,4 @@ public class Ratings {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	
-
 }

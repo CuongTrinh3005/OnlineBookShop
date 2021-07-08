@@ -62,7 +62,7 @@ public class User {
 	private Set<Order> orders;
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
-	private Set<Ratings> ratings;
+	private Set<Rating> ratings;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -75,7 +75,7 @@ public class User {
 	}
 
 	public User(String userName, String password, String fullName, Boolean gender, String address, String phoneNumber,
-			String email, byte[] photo, Set<Order> orders, Set<Ratings> ratings, Set<Role> roles) {
+			String email, byte[] photo, Set<Order> orders, Set<Rating> ratings, Set<Role> roles) {
 		super();
 		this.username = userName;
 		this.password = password;
@@ -169,11 +169,11 @@ public class User {
 		this.orders = orders;
 	}
 
-	public Collection<Ratings> getRatings() {
+	public Collection<Rating> getRatings() {
 		return ratings;
 	}
 
-	public void setRatings(Set<Ratings> ratings) {
+	public void setRatings(Set<Rating> ratings) {
 		this.ratings = ratings;
 	}
 

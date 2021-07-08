@@ -92,7 +92,7 @@ public class Book {
 	private Collection<OrderDetail> orderDetails;
 
 	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
-	private Collection<Ratings> ratings;
+	private Collection<Rating> ratings;
 
 	public Book() {
 
@@ -107,7 +107,7 @@ public class Book {
 			Boolean available, @Past(message = "Not allow to choose day in future") Date dateIn,
 			@Past(message = "Not allow to choose day in future") Date dateUpdate, Category category,
 			Publisher publisher, Set<Author> authors, Collection<OrderDetail> orderDetails,
-			Collection<Ratings> ratings) {
+			Collection<Rating> ratings) {
 		super();
 		this.bookId = bookId;
 		this.bookName = bookName;
@@ -265,11 +265,11 @@ public class Book {
 		this.orderDetails = orderDetails;
 	}
 
-	public Collection<Ratings> getRatings() {
+	public Collection<Rating> getRatings() {
 		return ratings;
 	}
 
-	public void setRatings(Collection<Ratings> ratings) {
+	public void setRatings(Collection<Rating> ratings) {
 		this.ratings = ratings;
 	}
 
