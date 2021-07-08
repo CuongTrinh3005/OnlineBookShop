@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.example.onlinebookshop.model.Category;
 
 public interface CategoryService {
-	List<Category> getAllCategries();
+	List<Category> getAllCategories();
 
 	Optional<Category> findCategoryByName(String name);
 	

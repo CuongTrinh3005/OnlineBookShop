@@ -24,6 +24,7 @@ import com.example.onlinebookshop.model.dto.BookDTO;
 import com.example.onlinebookshop.repository.CategoryRepository;
 import com.example.onlinebookshop.service.impl.AuthorService;
 import com.example.onlinebookshop.service.impl.BookService;
+import com.example.onlinebookshop.service.impl.CategoryService;
 import com.example.onlinebookshop.service.impl.PublisherService;
 
 import io.jsonwebtoken.lang.Collections;
@@ -33,7 +34,7 @@ import io.jsonwebtoken.lang.Collections;
 @RequestMapping("/api/public")
 public class PublicController {
 	@Autowired
-	CategoryRepository categoryService;
+	CategoryService categoryService;
 
 	@Autowired
 	BookService bookService;
@@ -47,6 +48,16 @@ public class PublicController {
 	@RequestMapping({ "/hello" })
 	public String firstPage() {
 		return "Hello World";
+	}
+	
+	@GetMapping("categories")
+	public List<Category> getCategories() {
+		return categoryService.getAllCategories();
+	}
+	
+	@GetMapping("categories/name")
+	public Optional<Category> getCategoryByName(@RequestParam String name) {
+		return categoryService.findCategoryByName(name);
 	}
 
 	@GetMapping("books")
@@ -88,11 +99,6 @@ public class PublicController {
 	@GetMapping("publishers")
 	public Publisher getBookDTOByPublisherName(@RequestParam String name) {
 		return publisherService.findPublisherByName(name);
-	}
-	
-	@GetMapping("categories")
-	public Category getCategoryName(@RequestParam String name) {
-		return categoryService.findByCategoryName(name);
 	}
 	
 	@GetMapping("authors")

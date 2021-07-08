@@ -31,10 +31,10 @@ public class CategoryController {
 	@Autowired
 	CategoryService categoryService;
 
-	@GetMapping("categories")
-	public List<Category> getCategories() {
-		return categoryService.getAllCategries();
-	}
+//	@GetMapping("categories")
+//	public List<Category> getCategories() {
+//		return categoryService.getAllCategories();
+//	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("categories/{id}")
@@ -42,10 +42,10 @@ public class CategoryController {
 		return categoryService.findById(id);
 	}
 
-	@GetMapping("categories/name/{name}")
-	public Optional<Category> getCategoryByName(@PathVariable String name) {
-		return categoryService.findCategoryByName(name);
-	}
+//	@GetMapping("categories/name/{name}")
+//	public Optional<Category> getCategoryByName(@PathVariable String name) {
+//		return categoryService.findCategoryByName(name);
+//	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("categories")
