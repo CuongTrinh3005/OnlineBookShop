@@ -1,5 +1,6 @@
 package com.example.onlinebookshop.controller;
 
+import java.net.URI;
 import java.util.Optional;
 import java.util.Set;
 
@@ -13,12 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.onlinebookshop.exception.CustomException;
 import com.example.onlinebookshop.model.Book;
@@ -36,15 +39,30 @@ public class BookController {
 	Validator validator;
 	
 	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("books/{id}")
+	public Optional<BookDTO> retrieveBook(@PathVariable Long id) {
+		Book book = bookService.getBookById(id).get();
+		return Optional.of(bookService.convertBookToDTO(book));
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("books")
-	public Book saveBook(@Valid @RequestBody BookDTO bookDTO){
+	public ResponseEntity<Book> saveBook(@Valid @RequestBody BookDTO bookDTO){
 		Set<ConstraintViolation<BookDTO>> result = validator.validate(bookDTO);
 		if (!result.isEmpty()) {
 			// do here whatever you want with each validation violation.
 			System.out.println("BookDTO is invalid!");
 			throw new CustomException("Check your input");
 		}
-		return bookService.saveBook(bookDTO);
+		Book book = bookService.saveBook(bookDTO);
+		
+		//Create resource location
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                                    .path("/{id}")
+                                    .buildAndExpand(book.getBookId())
+                                    .toUri();
+        
+        return ResponseEntity.created(location).build();
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")

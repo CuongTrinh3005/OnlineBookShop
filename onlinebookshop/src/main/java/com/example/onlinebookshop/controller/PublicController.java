@@ -66,12 +66,6 @@ public class PublicController {
 				.collect(Collectors.toList());
 	}
 
-	@GetMapping("books/{id}")
-	public Optional<BookDTO> retrieveBook(@PathVariable Long id) {
-		Book book = bookService.getBookById(id).get();
-		return Optional.of(bookService.convertBookToDTO(book));
-	}
-
 	@GetMapping("books/name")
 	public List<BookDTO> retriveBookByName(@RequestParam String name) {
 		return bookService.getBookByName(name).stream().map(bookService::convertBookToDTO)

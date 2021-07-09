@@ -1,6 +1,6 @@
 package com.example.onlinebookshop.controller;
 
-import java.util.List;
+import java.net.URI;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.onlinebookshop.exception.CustomException;
 import com.example.onlinebookshop.exception.ResourceAlreadyExistedException;
@@ -31,29 +32,36 @@ public class CategoryController {
 	@Autowired
 	CategoryService categoryService;
 
-//	@GetMapping("categories")
-//	public List<Category> getCategories() {
-//		return categoryService.getAllCategories();
-//	}
-
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("categories/{id}")
 	public Optional<Category> retrieveCategory(@PathVariable String id) {
 		return categoryService.findById(id);
 	}
 
-//	@GetMapping("categories/name/{name}")
-//	public Optional<Category> getCategoryByName(@PathVariable String name) {
-//		return categoryService.findCategoryByName(name);
+//	@PreAuthorize("hasRole('ADMIN')")
+//	@PostMapping("categories")
+//	public Category saveCategory(@Valid @RequestBody Category category) {
+//		Boolean existed = categoryService.existsById(category.getCategoryId());
+//		if(existed) throw new ResourceAlreadyExistedException("Resource already existed");
+//		
+//		return categoryService.saveCategory(category);
 //	}
-
+	
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("categories")
-	public Category saveCategory(@Valid @RequestBody Category category) {
+	public ResponseEntity<Category> saveCategory(@Valid @RequestBody Category category) {
 		Boolean existed = categoryService.existsById(category.getCategoryId());
 		if(existed) throw new ResourceAlreadyExistedException("Resource already existed");
 		
-		return categoryService.saveCategory(category);
+		categoryService.saveCategory(category);
+		
+		//Create resource location
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                                    .path("/{id}")
+                                    .buildAndExpand(category.getCategoryId())
+                                    .toUri();
+        
+        return ResponseEntity.created(location).build();
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
