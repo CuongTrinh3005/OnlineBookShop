@@ -2,25 +2,33 @@ package com.example.onlinebookshop.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.onlinebookshop.OnlinebookshopApplication;
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
+import com.example.onlinebookshop.model.Role;
 import com.example.onlinebookshop.model.User;
+import com.example.onlinebookshop.model.dto.UserDTO;
 import com.example.onlinebookshop.repository.UserRepository;
+import com.example.onlinebookshop.service.impl.RoleService;
 import com.example.onlinebookshop.service.impl.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-	public UserServiceImpl() {
-		// TODO Auto-generated constructor stub
-	}
+	@Autowired
+	PasswordEncoder encoder;
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	RoleService roleService;
 
 	@Override
 	public List<User> getAllUsers() {
@@ -53,5 +61,32 @@ public class UserServiceImpl implements UserService {
 	public User saveUser(User user) {
 		return userRepository.save(user);
 	}
-	
+
+	@Override
+	public User convertUserDtoToUser(UserDTO userDTO) {
+		if(userDTO == null)	throw new ResourceNotFoundException("Do not have user's data"); 
+		
+		User user = new User();
+		user.setUserName(userDTO.getUsername());
+		user.setPassword(userDTO.getPassword());
+		user.setFullName(userDTO.getFullName());
+		user.setEmail(userDTO.getEmail());
+		
+		String[] roleIds = userDTO.getRoleIds();
+		List<Integer> listRoleIds = OnlinebookshopApplication.convertStringArrToIntArr(roleIds);
+		List<Role> listRoles = roleService.findAllById(listRoleIds);
+		user.setRoles(listRoles.stream().collect(Collectors.toSet()));
+		
+		return user;
+	}
+
+	@Override
+	public User createNewUser(UserDTO userDTO) {
+		User user = convertUserDtoToUser(userDTO);
+		String password = user.getPassword();
+		String encodedPassword = encoder.encode(password);
+		user.setPassword(encodedPassword);
+		
+		return userRepository.save(user);
+	}
 }

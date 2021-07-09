@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
-import com.example.onlinebookshop.model.Author;
 import com.example.onlinebookshop.model.OrderDetail;
 import com.example.onlinebookshop.model.OrderDetail.OrderDetailID;
 import com.example.onlinebookshop.repository.OrderDetailRepository;

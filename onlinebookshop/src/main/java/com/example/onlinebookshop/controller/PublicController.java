@@ -66,7 +66,7 @@ public class PublicController {
 				.collect(Collectors.toList());
 	}
 
-	@GetMapping("books/name")
+	@GetMapping("books/name") // update url to /users/search/items?
 	public List<BookDTO> retriveBookByName(@RequestParam String name) {
 		return bookService.getBookByName(name).stream().map(bookService::convertBookToDTO)
 				.collect(Collectors.toList());

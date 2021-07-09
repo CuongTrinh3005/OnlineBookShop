@@ -59,9 +59,11 @@ public class User {
 	private byte[] photo;
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+	@JsonIgnore
 	private Set<Order> orders;
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+	@JsonIgnore
 	private Set<Rating> ratings;
 	
 	@ManyToMany(fetch = FetchType.LAZY)

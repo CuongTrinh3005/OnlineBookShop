@@ -9,6 +9,6 @@ import com.example.onlinebookshop.model.RoleName;
 import java.util.Optional;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<Role, Integer> {
     Optional<Role> findByName(RoleName roleName);
 }

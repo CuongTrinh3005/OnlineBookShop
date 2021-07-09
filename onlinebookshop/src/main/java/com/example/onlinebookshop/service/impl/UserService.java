@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.onlinebookshop.model.User;
+import com.example.onlinebookshop.model.dto.UserDTO;
 
 @Service
 public interface UserService {
@@ -20,4 +21,7 @@ public interface UserService {
 	void delete(User user);
 	
 	User saveUser(User user);
+	
+	User convertUserDtoToUser(UserDTO userDTO);
+	User createNewUser(UserDTO userDTO);
 }
