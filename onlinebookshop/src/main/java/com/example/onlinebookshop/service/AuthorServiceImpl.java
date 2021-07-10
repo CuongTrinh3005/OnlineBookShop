@@ -27,4 +27,24 @@ public class AuthorServiceImpl implements AuthorService {
 	public List<Author> findAllById(List<Integer> listAuthorId) {
 		return authorRepository.findAllById(listAuthorId);
 	}
+
+	@Override
+	public Author findByAuthorName(String name) {
+		return authorRepository.findByAuthorName(name);
+	}
+
+	@Override
+	public Author saveAuthor(Author author) {
+		return authorRepository.save(author);
+	}
+
+	@Override
+	public List<Author> getAllAuthors() {
+		return authorRepository.findAll();
+	}
+
+	@Override
+	public void deleteAuthor(Integer id) {
+		authorRepository.deleteById(id);
+	}
 }

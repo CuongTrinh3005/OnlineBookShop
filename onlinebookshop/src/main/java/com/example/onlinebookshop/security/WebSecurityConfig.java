@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.example.onlinebookshop.security.jwt.JwtAuthEntryPoint;
 import com.example.onlinebookshop.security.jwt.JwtAuthTokenFilter;
@@ -67,7 +68,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .authorizeRequests().antMatchers("/api/auth/**").permitAll()
             .antMatchers("/api/public/**").permitAll()
-            .anyRequest().authenticated();
+            .anyRequest().authenticated()
+            .and()
+//            .logout()
+//              //To match GET requests we have to use a request matcher.
+//              .logoutRequestMatcher(new AntPathRequestMatcher("api/logout"));
+            .logout(logout -> logout                                                
+                    .logoutUrl("api/logout")                                            
+//                    .logoutSuccessUrl("/my/index")                                      
+//                    .logoutSuccessHandler(logoutSuccessHandler)                         
+                    .invalidateHttpSession(true))   ;                                  
+//                    .addLogoutHandler(logoutHandler))  ;
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

@@ -1,6 +1,5 @@
 package com.example.onlinebookshop.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -84,15 +83,12 @@ public class PublicController {
 	}
 
 	@GetMapping("publishers")
-	public Publisher getBookDTOByPublisherName(@RequestParam String name) {
+	public Publisher getPublisherByPublisherName(@RequestParam String name) {
 		return publisherService.findPublisherByName(name);
 	}
 	
 	@GetMapping("authors")
-	public List<Author> getAuthorsById(){
-		List<Integer> ids = new ArrayList<Integer>();
-		ids.add(1);
-		ids.add(2);
-		return authorService.findAllById(ids);
+	public Author getAuthorByName(@RequestParam String name){
+		return authorService.findByAuthorName(name);
 	}
 }

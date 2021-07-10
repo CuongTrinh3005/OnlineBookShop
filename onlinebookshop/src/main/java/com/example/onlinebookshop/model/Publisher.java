@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,6 +22,7 @@ public class Publisher {
 	@Column(name="publisher_id")
 	private Integer publisherId;
 	@Column(name="publisher_name")
+	@NotBlank
 	private String publisherName;
 	@Column(name="address")
 	private String address;

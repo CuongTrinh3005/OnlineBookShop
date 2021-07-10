@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="authors", schema="public")
@@ -17,6 +18,7 @@ public class Author {
 	@Column(name="author_id")
 	private Integer authorId;
 	@Column(name="author_name")
+	@NotBlank
 	private String authorName;
 	@Column(name="address")
 	private String address;
