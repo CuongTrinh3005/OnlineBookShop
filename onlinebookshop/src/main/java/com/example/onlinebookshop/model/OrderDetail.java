@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,6 +20,7 @@ public class OrderDetail {
 	private OrderDetailID orderDetailID;
 	
 	@Column(name="quantity_order")
+	@NotNull
 	private Integer quantityOrder;
 	@Column(name="discount")
 	private Float discount;
@@ -33,11 +35,17 @@ public class OrderDetail {
 		@Column(name = "book_id")
 		private Long bookId ;
 		
-//		public OrderDetailID(Long orderId, Long bookId) {
-//			super();
-//			this.orderId = orderId;
-//			this.bookId = bookId;
-//		}
+		public OrderDetailID() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
+		public OrderDetailID(Long orderId, Long bookId) {
+			super();
+			this.orderId = orderId;
+			this.bookId = bookId;
+		}
+		
 		public Long getOrderId() {
 			return orderId;
 		}

@@ -10,4 +10,5 @@ import com.example.onlinebookshop.model.OrderDetail.OrderDetailID;
 public interface OrderDetailService {
 	Optional<OrderDetail> findById(OrderDetailID id);
 	List<OrderDetail> findAllById(List<OrderDetailID> listOrderDetailId);
+	OrderDetail saveOrderDetail(OrderDetail detail);
 }

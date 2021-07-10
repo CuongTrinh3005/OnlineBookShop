@@ -18,4 +18,5 @@ public interface BookService{
 	Book saveBook(BookDTO bookDTO);
 	Book updateBook(BookDTO bookDTO, Long id);
 	void deleteBook(Book book);
+//	Boolean updateBookQuantity(Long id, int quantity);
 }

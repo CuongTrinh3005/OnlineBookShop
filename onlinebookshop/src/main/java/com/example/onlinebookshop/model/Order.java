@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,6 +34,7 @@ public class Order {
 	private Date orderDate;
 //	private String customerId;
 	@Column(name="order_address")
+	@NotBlank
 	private String orderAddress;
 	@Column(name="description")
 	private String description;
