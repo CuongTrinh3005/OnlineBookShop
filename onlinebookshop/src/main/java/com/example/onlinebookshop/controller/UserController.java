@@ -2,7 +2,7 @@ package com.example.onlinebookshop.controller;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,10 +27,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.onlinebookshop.exception.CustomException;
 import com.example.onlinebookshop.exception.ResourceAlreadyExistedException;
-import com.example.onlinebookshop.model.Book;
+
 import com.example.onlinebookshop.model.Role;
 import com.example.onlinebookshop.model.User;
-import com.example.onlinebookshop.model.dto.BookDTO;
+
 import com.example.onlinebookshop.model.dto.UserDTO;
 import com.example.onlinebookshop.service.impl.RoleService;
 import com.example.onlinebookshop.service.impl.UserService;

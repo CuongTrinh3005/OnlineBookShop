@@ -10,13 +10,16 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,7 +86,10 @@ public class OrderController {
 			
 			if(book.getQuantity() < detail.getQuantityOrder())
 				throw new CustomException("Not enough quantity");
-					
+			
+			if(book.getAvailable()==null || !book.getAvailable())
+				throw new CustomException("Book can not be sold");
+			
 			long quantityLeft = book.getQuantity() - detail.getQuantityOrder();
 			book.setQuantity(quantityLeft);
 			BookDTO bookDTO = bookService.convertBookToDTO(book);
@@ -97,4 +103,16 @@ public class OrderController {
 		return ResponseEntity.created(location).build();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("orders/{id}")
+	@Transactional(isolation = Isolation.SERIALIZABLE)
+	public ResponseEntity<Order> updateOrder(@Valid @RequestBody Order order, @PathVariable Long id) {
+		Optional<Order> orderOpt = orderService.findOrderById(id);
+
+		Order existedOrder = orderOpt.get();
+		existedOrder.setOrderAddress(order.getOrderAddress());
+		existedOrder.setDescription(order.getDescription());
+		
+		return new ResponseEntity<Order>(orderService.saveOrder(existedOrder), HttpStatus.OK);
+	}
 }
