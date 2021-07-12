@@ -31,7 +31,7 @@ import com.example.onlinebookshop.service.impl.UserService;
 @AutoConfigureMockMvc
 public class UserControllerTest {
 	@Autowired
-	private MockMvc mvc;
+	private MockMvc mockMvc;
 
 	@InjectMocks
 	private UserController userController;
@@ -53,7 +53,7 @@ public class UserControllerTest {
 	public void getAllTest() throws Exception {
 		when(userService.getAllUsers())
 		.thenReturn(this.userList);
-		this.mvc.perform(get("/api/v1/admin/users/"))
+		this.mockMvc.perform(get("/api/v1/admin/users/"))
 					.andExpect(status().isUnauthorized());
 	}
 }
