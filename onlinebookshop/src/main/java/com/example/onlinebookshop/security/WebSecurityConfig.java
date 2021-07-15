@@ -68,17 +68,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .authorizeRequests().antMatchers("/api/auth/**").permitAll()
             .antMatchers("/api/public/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
-//            .logout()
-//              //To match GET requests we have to use a request matcher.
-//              .logoutRequestMatcher(new AntPathRequestMatcher("api/logout"));
-            .logout(logout -> logout                                                
-                    .logoutUrl("api/logout")                                            
-//                    .logoutSuccessUrl("/my/index")                                      
-//                    .logoutSuccessHandler(logoutSuccessHandler)                         
-                    .invalidateHttpSession(true))   ;                                  
-//                    .addLogoutHandler(logoutHandler))  ;
+            .anyRequest().authenticated();
+//        http
+//        .logout()
+//            .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout")).logoutSuccessUrl("/api/auth/signin");
+        http.logout().logoutUrl("api/logout").invalidateHttpSession(true);
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

@@ -1,18 +1,40 @@
 package com.example.onlinebookshop.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.onlinebookshop.security.jwt.BlackListJwt;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
 public class LogOutController {
+	@Autowired
+	private BlackListJwt blackList;
+	
+	@PostMapping("logout")
+	public Boolean logout(HttpServletRequest request, HttpServletResponse response){
+		try{
+			String headerAuth = request.getHeader("Authorization"), jwt="";
 
-	@GetMapping("logout")
-	public String logout(){
-		return "Log out successfully!";
+	        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
+	            jwt = headerAuth.substring(7, headerAuth.length());
+	        }
+
+	        blackList.addToBlackList(jwt);
+		}
+		catch(Exception ex){
+			System.out.println("Logout error!");
+			return false;
+		}
+		
+        return true;
 	}
-
 }
