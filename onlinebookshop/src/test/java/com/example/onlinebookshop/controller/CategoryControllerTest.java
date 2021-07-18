@@ -69,10 +69,11 @@ public class CategoryControllerTest {
 	@Test
 	@WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
 	public void createCategory() throws Exception {
+		// Conflict for creating an already exist resource
 		mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/categories/")
-			.content(asJsonString(new Category("a2", "a", "a", null)))
+			.content(asJsonString(new Category("SGK", "a", "a", null)))
 			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
+			.accept(MediaType.APPLICATION_JSON)).andExpect(status().isConflict());
 	}
 
 	public static String asJsonString(final Object obj) {
