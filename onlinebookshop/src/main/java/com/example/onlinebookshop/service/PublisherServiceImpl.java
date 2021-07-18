@@ -42,6 +42,19 @@ public class PublisherServiceImpl implements PublisherService{
 	}
 
 	@Override
+	public Publisher updatePublisher(Publisher publisher, Integer id) {
+		Optional<Publisher> publisherOpt = findPublisherById(id);
+
+		Publisher existedPublisher = publisherOpt.get();
+
+		existedPublisher.setPublisherName(publisher.getPublisherName());
+		existedPublisher.setAddress(publisher.getAddress());
+		existedPublisher.setPhoneNumber(publisher.getPhoneNumber());
+		
+		return savePublisher(existedPublisher);
+	}
+
+	@Override
 	public void deletePublisher(Integer id) {
 		publisherRepository.deleteById(id);
 	}

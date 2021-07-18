@@ -107,12 +107,6 @@ public class OrderController {
 	@PutMapping("orders/{id}")
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public ResponseEntity<Order> updateOrder(@Valid @RequestBody Order order, @PathVariable Long id) {
-		Optional<Order> orderOpt = orderService.findOrderById(id);
-
-		Order existedOrder = orderOpt.get();
-		existedOrder.setOrderAddress(order.getOrderAddress());
-		existedOrder.setDescription(order.getDescription());
-		
-		return new ResponseEntity<Order>(orderService.saveOrder(existedOrder), HttpStatus.OK);
+		return new ResponseEntity<Order>(orderService.updateOrder(order, id), HttpStatus.OK);
 	}
 }

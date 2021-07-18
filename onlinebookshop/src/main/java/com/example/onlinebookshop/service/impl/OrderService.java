@@ -9,4 +9,5 @@ public interface OrderService {
 	List<Order> findOrderByUsername(String username);
 	Optional<Order> findOrderById(Long id);
 	Order saveOrder(Order order);
+	Order updateOrder(Order order, Long id);
 }

@@ -67,16 +67,7 @@ public class CategoryController {
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("categories/{id}")
 	public ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category, @PathVariable String id) {
-		Optional<Category> categoryOpt = categoryService.findById(id);
-
-		Category existedCategory = categoryOpt.get();
-
-		existedCategory.setCategoryId(category.getCategoryId());
-		existedCategory.setCategoryName(category.getCategoryName());
-		existedCategory.setDescription(category.getDescription());
-		existedCategory.setBooks(category.getBooks());
-
-		return new ResponseEntity<Category>(categoryService.saveCategory(existedCategory), HttpStatus.OK);
+		return new ResponseEntity<Category>(categoryService.updateCategory(category, id), HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")

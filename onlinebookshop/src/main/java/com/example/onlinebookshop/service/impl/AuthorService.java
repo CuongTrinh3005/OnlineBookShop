@@ -12,4 +12,5 @@ public interface AuthorService {
 	Author findByAuthorName(String name);
 	Author saveAuthor(Author author);
 	void deleteAuthor(Integer id);
+	Author updateAuthor(Author author, Integer id);
 }

@@ -69,15 +69,7 @@ public class AuthorController {
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("authors/{id}")
 	public ResponseEntity<Author> updateAuthor(@Valid @RequestBody Author author, @PathVariable Integer id) {
-		Optional<Author> authorOpt = authorService.findAuthorById(id);
-
-		Author existedAuthor = authorOpt.get();
-
-		existedAuthor.setAuthorName(author.getAuthorName());
-		existedAuthor.setAddress(author.getAddress());;
-		existedAuthor.setPhoneNumber(author.getPhoneNumber());
-
-		return new ResponseEntity<Author>(authorService.saveAuthor(existedAuthor), HttpStatus.OK);
+		return new ResponseEntity<Author>(authorService.updateAuthor(author, id), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")

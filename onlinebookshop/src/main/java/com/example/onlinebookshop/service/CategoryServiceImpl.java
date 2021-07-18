@@ -48,6 +48,20 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	public Category updateCategory(Category category, String id) {
+		Optional<Category> categoryOpt = findById(id);
+
+		Category existedCategory = categoryOpt.get();
+
+		existedCategory.setCategoryId(category.getCategoryId());
+		existedCategory.setCategoryName(category.getCategoryName());
+		existedCategory.setDescription(category.getDescription());
+		existedCategory.setBooks(category.getBooks());
+		
+		return saveCategory(existedCategory);
+	}
+
+	@Override
 	public Boolean existsById(String id) {
 		return categoryRepository.existsByCategoryId(id);
 	}

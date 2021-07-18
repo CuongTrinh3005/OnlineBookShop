@@ -11,4 +11,5 @@ public interface PublisherService {
 	List<Publisher> getAllPublishers();
 	Publisher savePublisher(Publisher publisher);
 	void deletePublisher(Integer id);
+	Publisher updatePublisher(Publisher publisher, Integer id);
 }

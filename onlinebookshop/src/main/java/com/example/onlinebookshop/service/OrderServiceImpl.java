@@ -33,4 +33,15 @@ public class OrderServiceImpl implements OrderService {
 	public Order saveOrder(Order order) {
 		return orderRepository.save(order);
 	}
+
+	@Override
+	public Order updateOrder(Order order, Long id) {
+		Optional<Order> orderOpt = findOrderById(id);
+
+		Order existedOrder = orderOpt.get();
+		existedOrder.setOrderAddress(order.getOrderAddress());
+		existedOrder.setDescription(order.getDescription());
+		
+		return saveOrder(existedOrder);
+	}
 }

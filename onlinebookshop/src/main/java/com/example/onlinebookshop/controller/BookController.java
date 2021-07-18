@@ -38,12 +38,11 @@ public class BookController {
 	@Autowired
 	Validator validator;
 	
-	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping("books/{id}")
-	public Optional<BookDTO> retrieveBook(@PathVariable Long id) {
-		Book book = bookService.getBookById(id).get();
-		return Optional.of(bookService.convertBookToDTO(book));
-	}
+//	@GetMapping("books/{id}")
+//	public Optional<BookDTO> retrieveBook(@PathVariable Long id) {
+//		Book book = bookService.getBookById(id).get();
+//		return Optional.of(bookService.convertBookToDTO(book));
+//	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("books")

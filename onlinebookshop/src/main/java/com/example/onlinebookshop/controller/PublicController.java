@@ -8,11 +8,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.onlinebookshop.model.Author;
+import com.example.onlinebookshop.model.Book;
 import com.example.onlinebookshop.model.Category;
 import com.example.onlinebookshop.model.Publisher;
 import com.example.onlinebookshop.model.dto.BookDTO;
@@ -56,6 +58,12 @@ public class PublicController {
 	public List<BookDTO> getAllBooks() {
 		return bookService.getAllBooks().stream().map(bookService::convertBookToDTO)
 				.collect(Collectors.toList());
+	}
+	
+	@GetMapping("books/{id}")
+	public Optional<BookDTO> retrieveBook(@PathVariable Long id) {
+		Book book = bookService.getBookById(id).get();
+		return Optional.of(bookService.convertBookToDTO(book));
 	}
 
 	@GetMapping("books/search") // update url to /users/search/items?

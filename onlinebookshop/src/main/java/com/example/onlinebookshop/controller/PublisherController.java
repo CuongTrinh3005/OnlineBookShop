@@ -64,15 +64,7 @@ public class PublisherController {
 	@PutMapping("publishers/{id}")
 	public ResponseEntity<Publisher> updatePublisher(@Valid @RequestBody Publisher publisher,
 			@PathVariable Integer id) {
-		Optional<Publisher> publisherOpt = publisherService.findPublisherById(id);
-
-		Publisher existedPublisher = publisherOpt.get();
-
-		existedPublisher.setPublisherName(publisher.getPublisherName());
-		existedPublisher.setAddress(publisher.getAddress());
-		existedPublisher.setPhoneNumber(publisher.getPhoneNumber());
-
-		return new ResponseEntity<Publisher>(publisherService.savePublisher(existedPublisher), HttpStatus.OK);
+		return new ResponseEntity<Publisher>(publisherService.updatePublisher(publisher, id), HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
