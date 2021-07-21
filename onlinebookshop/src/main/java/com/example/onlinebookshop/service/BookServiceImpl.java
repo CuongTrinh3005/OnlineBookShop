@@ -183,5 +183,14 @@ public class BookServiceImpl implements BookService {
 	public void deleteBook(Book book) {
 		bookRepository.delete(book);
 	}
-	
+
+	@Override
+	public List<Book> getListBookByDateInDesc() {
+		return bookRepository.findTop10ByOrderByDateInDesc();
+	}
+
+	@Override
+	public List<Book> getListBookByDiscountDesc() {
+		return bookRepository.findTop10ByOrderByDiscountDesc();
+	}
 }

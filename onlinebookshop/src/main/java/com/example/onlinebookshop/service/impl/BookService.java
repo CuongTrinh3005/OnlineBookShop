@@ -18,5 +18,7 @@ public interface BookService{
 	Book saveBook(BookDTO bookDTO);
 	Book updateBook(BookDTO bookDTO, Long id);
 	void deleteBook(Book book);
+	List<Book> getListBookByDateInDesc();
+	List<Book> getListBookByDiscountDesc();
 //	Boolean updateBookQuantity(Long id, int quantity);
 }

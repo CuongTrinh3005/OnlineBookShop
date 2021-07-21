@@ -46,13 +46,6 @@ public class AuthorController {
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping("authors/{id}")
-	public Optional<Author> getAuthorById(@PathVariable Integer id){
-		Optional<Author> author = authorService.findAuthorById(id);
-		return author;
-	}
-	
-	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("authors")
 	public ResponseEntity<Author> saveAuthor(@Valid @RequestBody Author author){
 		authorService.saveAuthor(author);

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,6 +67,18 @@ public class PublicController {
 		return Optional.of(bookService.convertBookToDTO(book));
 	}
 
+	@GetMapping("books/new")
+	public List<BookDTO> getNewBooks() {
+		return bookService.getListBookByDateInDesc().stream().map(bookService::convertBookToDTO)
+				.collect(Collectors.toList());		
+	}
+	
+	@GetMapping("books/discounting")
+	public List<BookDTO> getDiscountingBooks() {
+		return bookService.getListBookByDiscountDesc().stream().map(bookService::convertBookToDTO)
+				.collect(Collectors.toList());		
+	}
+	
 	@GetMapping("books/search") // update url to /users/search/items?
 	public List<BookDTO> retriveBookByName(@RequestParam String name) {
 		return bookService.getBookByName(name).stream().map(bookService::convertBookToDTO)
@@ -98,5 +111,11 @@ public class PublicController {
 	@GetMapping("authors")
 	public Author getAuthorByName(@RequestParam String name){
 		return authorService.findByAuthorName(name);
+	}
+	
+	@GetMapping("authors/{id}")
+	public Optional<Author> getAuthorById(@PathVariable Integer id){
+		Optional<Author> author = authorService.findAuthorById(id);
+		return author;
 	}
 }
