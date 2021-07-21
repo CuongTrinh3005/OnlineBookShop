@@ -191,6 +191,12 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<Book> getListBookByDiscountDesc() {
-		return bookRepository.findTop10ByOrderByDiscountDesc();
+		List<Book> list = bookRepository.findTop10ByOrderByDiscountDesc();
+		for (int index = 0; index < list.size(); index++) {
+			if(list.get(index).getDiscount()==0){
+				list.remove(index);
+			}
+		}
+		return list;
 	}
 }
