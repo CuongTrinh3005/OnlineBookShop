@@ -60,12 +60,6 @@ public class RatingController {
 	
 	@PutMapping("ratings")
 	public ResponseEntity<Rating> updateRating(@Valid @RequestBody Rating rating) {
-		Optional<Rating> ratingOpt = ratingService.getByRatingId(rating.getRatingId());
-		Rating existedRating = ratingOpt.get();
-
-		existedRating.setDateRating(new Date());
-		existedRating.setLevelRating(rating.getLevelRating());
-
-		return new ResponseEntity<Rating>(ratingService.saveRating(existedRating), HttpStatus.OK);
+		return new ResponseEntity<Rating>(ratingService.updateRating(rating), HttpStatus.OK);
 	}
 }

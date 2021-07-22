@@ -1,9 +1,12 @@
 package com.example.onlinebookshop.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
@@ -36,8 +39,12 @@ public class RatingServiceImpl implements RatingService {
 
 	@Override
 	public Rating updateRating(Rating rating) {
-		
-		return null;
+		Optional<Rating> ratingOpt = getByRatingId(rating.getRatingId());
+		Rating existedRating = ratingOpt.get();
+
+		existedRating.setDateRating(new Date());
+		existedRating.setLevelRating(rating.getLevelRating());
+		return ratingRepository.save(existedRating);
 	}
 
 	@Override
