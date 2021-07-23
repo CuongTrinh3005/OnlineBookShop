@@ -20,5 +20,6 @@ public interface BookService{
 	void deleteBook(Book book);
 	List<Book> getListBookByDateInDesc();
 	List<Book> getListBookByDiscountDesc();
+	List<Book> getListBookByAscendingOrder();
 //	Boolean updateBookQuantity(Long id, int quantity);
 }

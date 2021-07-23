@@ -61,6 +61,12 @@ public class PublicController {
 				.collect(Collectors.toList());
 	}
 	
+	@GetMapping("books/ascending")
+	public List<BookDTO> getAllBooksAscendingOrder() {
+		return bookService.getListBookByAscendingOrder().stream().map(bookService::convertBookToDTO)
+				.collect(Collectors.toList());
+	}
+	
 	@GetMapping("books/{id}")
 	public Optional<BookDTO> retrieveBook(@PathVariable Long id) {
 		Book book = bookService.getBookById(id).get();

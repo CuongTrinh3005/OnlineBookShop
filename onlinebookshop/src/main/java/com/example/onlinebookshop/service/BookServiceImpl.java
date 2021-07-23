@@ -45,6 +45,11 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	public List<Book> getListBookByAscendingOrder() {
+		return bookRepository.findAllByOrderByBookIdAsc();
+	}
+
+	@Override
 	public Optional<Book> getBookById(Long id) {
 		Book book = bookRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Book id " + id + " not found"));
