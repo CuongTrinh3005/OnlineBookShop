@@ -18,7 +18,14 @@ public class UserDTO {
 	@Size(max = 50)
     @Email
 	private String email;
-	@Size(min = 1)
+	@Size(max = 50)
+    
+	private String address;
+	@Size(max = 50)
+    
+	private String phoneNumber;
+	private Boolean gender;
+	private byte[] photo;
 	private String[] roleIds = new String[0];
 	
 	public UserDTO() {
@@ -27,15 +34,22 @@ public class UserDTO {
 
 	public UserDTO(String username, @Size(min = 4, max = 100) String password,
 			@NotBlank @Size(min = 3, max = 50) String fullName, @NotBlank @Size(max = 50) @Email String email,
-			@Size(min = 1) String[] roleIds) {
+			@Size(max = 50) String address, @Size(max = 50) String phoneNumber, Boolean gender, byte[] photo,
+			String[] roleIds) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.fullName = fullName;
 		this.email = email;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.gender = gender;
+		this.photo = photo;
 		this.roleIds = roleIds;
 	}
-	
+
+
+
 	public String getUsername() {
 		return username;
 	}
@@ -60,6 +74,38 @@ public class UserDTO {
 		this.fullName = fullName;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public Boolean getGender() {
+		return gender;
+	}
+
+	public void setGender(Boolean gender) {
+		this.gender = gender;
+	}
+
 	public String[] getRoleIds() {
 		return roleIds;
 	}
@@ -68,13 +114,13 @@ public class UserDTO {
 		this.roleIds = roleIds;
 	}
 
-	public String getEmail() {
-		return email;
+	public byte[] getPhoto() {
+		return photo;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
-	
+
 	
 }

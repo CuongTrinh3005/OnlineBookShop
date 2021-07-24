@@ -71,6 +71,10 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(userDTO.getPassword());
 		user.setFullName(userDTO.getFullName());
 		user.setEmail(userDTO.getEmail());
+		user.setAddress(userDTO.getAddress());
+		user.setPhoneNumber(userDTO.getPhoneNumber());
+		user.setGender(userDTO.getGender());
+		user.setPhoto(userDTO.getPhoto());
 		
 		String[] roleIds = userDTO.getRoleIds();
 		List<Integer> listRoleIds = OnlinebookshopApplication.convertStringArrToIntArr(roleIds);

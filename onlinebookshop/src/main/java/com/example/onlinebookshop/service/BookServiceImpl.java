@@ -198,7 +198,7 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getListBookByDiscountDesc() {
 		List<Book> list = bookRepository.findTop10ByOrderByDiscountDesc();
 		for (int index = 0; index < list.size(); index++) {
-			if(list.get(index).getDiscount()==0){
+			if(list.get(index).getDiscount()==0 || list.get(index).getDiscount()==null){
 				list.remove(index);
 			}
 		}
