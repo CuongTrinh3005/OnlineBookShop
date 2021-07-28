@@ -14,6 +14,7 @@ import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.model.Role;
 import com.example.onlinebookshop.model.User;
 import com.example.onlinebookshop.model.dto.UserDTO;
+import com.example.onlinebookshop.model.dto.UserDTOString;
 import com.example.onlinebookshop.repository.UserRepository;
 import com.example.onlinebookshop.service.impl.RoleService;
 import com.example.onlinebookshop.service.impl.UserService;
@@ -82,6 +83,49 @@ public class UserServiceImpl implements UserService {
 		user.setRoles(listRoles.stream().collect(Collectors.toSet()));
 		
 		return user;
+	}
+	
+	@Override
+	public UserDTOString convertUserToUserDTOString(User user) {
+		if(user == null)	throw new ResourceNotFoundException("Do not have user's data");
+		
+		UserDTOString userdstr = new UserDTOString();
+		userdstr.setUsername(user.getUserName());
+		userdstr.setFullName(user.getFullName());
+		userdstr.setEmail(user.getEmail());
+		userdstr.setAddress(user.getAddress());
+		userdstr.setPhoneNumber(user.getPhoneNumber());
+		userdstr.setGender(user.getGender());
+		userdstr.setPhoto(user.getPhoto());
+		
+		String roles = "";
+		Object[] roleArray = user.getRoles().toArray();
+		for(int index=0; index<roleArray.length; index++){
+			Role role = (Role) roleArray[index];
+			roles += role.getRoleName() + " ";
+		}
+		   
+		userdstr.setRoles(roles);
+		return userdstr;
+	}
+
+	@Override
+	public User updateUser(UserDTO userDTO, String username) {
+		Optional<User> userOpt = findByUserName(username);
+
+		User existedUser = userOpt.get();
+		
+		User user = convertUserDtoToUser(userDTO);
+		
+		existedUser.setUserName(user.getUserName());
+		existedUser.setFullName(user.getFullName());
+		existedUser.setGender(user.getGender());
+		existedUser.setPhoneNumber(user.getPhoneNumber());
+		existedUser.setAddress(user.getAddress());
+		existedUser.setPhoto(user.getPhoto());
+		existedUser.setRoles(user.getRoles());
+		
+		return saveUser(existedUser);
 	}
 
 	@Override

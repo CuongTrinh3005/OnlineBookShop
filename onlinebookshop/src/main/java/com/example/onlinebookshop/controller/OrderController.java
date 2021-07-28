@@ -53,8 +53,8 @@ public class OrderController {
 	@Autowired
 	BookService bookService;
 
-	@GetMapping("orders")
-	public List<Order> getAllOrdersByUsername(@RequestParam String username) {
+	@GetMapping("list/orders/{username}")
+	public List<Order> getAllOrdersByUsername(@PathVariable String username) {
 		return orderService.findOrderByUsername(username);
 	}
 

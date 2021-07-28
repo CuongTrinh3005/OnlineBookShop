@@ -33,4 +33,9 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	public OrderDetail saveOrderDetail(OrderDetail detail) {
 		return orderDetailRepository.save(detail);
 	}
+
+	@Override
+	public List<OrderDetail> getAllOrderDetailByOrderId(Long orderId) {
+		return orderDetailRepository.findByOrderDetailIDOrderId(orderId);
+	}
 }

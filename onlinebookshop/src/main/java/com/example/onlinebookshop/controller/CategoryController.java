@@ -53,6 +53,9 @@ public class CategoryController {
 		Boolean existed = categoryService.existsById(category.getCategoryId());
 		if(existed) throw new ResourceAlreadyExistedException("Resource already existed");
 		
+		Boolean existedName = categoryService.existByName(category.getCategoryName());
+		if(existedName) throw new ResourceAlreadyExistedException("Category name already existed");
+		
 		categoryService.saveCategory(category);
 		
 		//Create resource location

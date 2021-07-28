@@ -48,10 +48,10 @@ public class RatingController {
 		return ratingService.getAllRatingByUserName(username);
 	}
 	
-	@GetMapping("ratings/books/{id}")
-	public List<Rating> getBookRatings(@PathVariable Long id){
-		return ratingService.getAllRatingByBookId(id);
-	}
+//	@GetMapping("ratings/books/{id}")
+//	public List<Rating> getBookRatings(@PathVariable Long id){
+//		return ratingService.getAllRatingByBookId(id);
+//	}
 	
 	@PostMapping("ratings")
 	public Rating saveRating(@Valid @RequestBody Rating rating){

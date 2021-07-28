@@ -18,11 +18,13 @@ import com.example.onlinebookshop.model.Author;
 import com.example.onlinebookshop.model.Book;
 import com.example.onlinebookshop.model.Category;
 import com.example.onlinebookshop.model.Publisher;
+import com.example.onlinebookshop.model.Rating;
 import com.example.onlinebookshop.model.dto.BookDTO;
 import com.example.onlinebookshop.service.impl.AuthorService;
 import com.example.onlinebookshop.service.impl.BookService;
 import com.example.onlinebookshop.service.impl.CategoryService;
 import com.example.onlinebookshop.service.impl.PublisherService;
+import com.example.onlinebookshop.service.impl.RatingService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -39,6 +41,9 @@ public class PublicController {
 	
 	@Autowired
 	AuthorService authorService;
+	
+	@Autowired
+	RatingService ratingService;
 
 	@RequestMapping({ "/hello" })
 	public String firstPage() {
@@ -83,6 +88,11 @@ public class PublicController {
 	public List<BookDTO> getDiscountingBooks() {
 		return bookService.getListBookByDiscountDesc().stream().map(bookService::convertBookToDTO)
 				.collect(Collectors.toList());		
+	}
+	
+	@GetMapping("ratings/books/{id}")
+	public List<Rating> getBookRatings(@PathVariable Long id){
+		return ratingService.getAllRatingByBookId(id);
 	}
 	
 	@GetMapping("books/search") // update url to /users/search/items?

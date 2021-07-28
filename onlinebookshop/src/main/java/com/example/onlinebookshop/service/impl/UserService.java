@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.onlinebookshop.model.User;
 import com.example.onlinebookshop.model.dto.UserDTO;
+import com.example.onlinebookshop.model.dto.UserDTOString;
 
 @Service
 public interface UserService {
@@ -23,5 +24,7 @@ public interface UserService {
 	User saveUser(User user);
 	
 	User convertUserDtoToUser(UserDTO userDTO);
+	UserDTOString convertUserToUserDTOString(User user);
 	User createNewUser(UserDTO userDTO);
+	User updateUser(UserDTO userDTO, String username);
 }

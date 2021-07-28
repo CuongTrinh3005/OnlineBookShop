@@ -9,4 +9,5 @@ import com.example.onlinebookshop.model.Category;
 public interface CategoryRepository extends JpaRepository<Category, String> {
 	Category findByCategoryName(String categoryName);
 	Boolean existsByCategoryId(String categoryId);
+	Boolean existsByCategoryName(String categoryName);
 }

@@ -19,4 +19,6 @@ public interface CategoryService {
 	Category saveCategory(Category category);
 	
 	Category updateCategory(Category category, String id);
+	
+	Boolean existByName(String name);
 }

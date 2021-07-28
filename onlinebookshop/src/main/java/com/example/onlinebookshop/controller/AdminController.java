@@ -2,6 +2,7 @@ package com.example.onlinebookshop.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.onlinebookshop.exception.CustomException;
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.model.User;
+import com.example.onlinebookshop.model.dto.UserDTOString;
 import com.example.onlinebookshop.service.impl.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -28,9 +30,10 @@ public class AdminController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("users")
-	public List<User> getAllUsers() {
-		return userService.getAllUsers();
-	}
+	public List<UserDTOString> getAllUsers() {
+		return userService.getAllUsers().stream().map(userService::convertUserToUserDTOString)
+				.collect(Collectors.toList());
+	} 
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("users/{username}")

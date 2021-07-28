@@ -65,20 +65,8 @@ public class UserController {
 	}
 
 	@PutMapping("users/{username}")
-	public ResponseEntity<User> updateDetails(@Valid @RequestBody User user, @PathVariable String username) {
-		Optional<User> userOpt = userService.findByUserName(username);
-
-		User existedUser = userOpt.get();
-		
-		existedUser.setUserName(user.getUserName());
-		existedUser.setFullName(user.getFullName());
-		existedUser.setGender(user.getGender());
-		existedUser.setPhoneNumber(user.getPhoneNumber());
-		existedUser.setAddress(user.getAddress());
-		existedUser.setPhoto(user.getPhoto());
-		existedUser.setRoles(user.getRoles());
-
-		return new ResponseEntity<User>(userService.saveUser(existedUser), HttpStatus.OK);
+	public ResponseEntity<User> updateDetails(@Valid @RequestBody UserDTO userDTO, @PathVariable String username) {
+		return new ResponseEntity<User>(userService.updateUser(userDTO, username), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
