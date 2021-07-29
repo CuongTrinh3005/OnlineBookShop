@@ -102,7 +102,14 @@ public class UserServiceImpl implements UserService {
 		Object[] roleArray = user.getRoles().toArray();
 		for(int index=0; index<roleArray.length; index++){
 			Role role = (Role) roleArray[index];
-			roles += role.getRoleName() + " ";
+			String roleName = "";
+			if(role.getRoleId() == 1){
+				roleName += "User";
+			}
+			else if(role.getRoleId() == 2){
+				roleName += "Admin";
+			}
+			roles += roleName + " ";
 		}
 		   
 		userdstr.setRoles(roles);
