@@ -25,9 +25,6 @@ public class Author {
 	@Column(name="phone_number")
 	private String phoneNumber;
 	
-//	@ManyToMany(mappedBy = "authors")
-//    private Set<Book> books = new HashSet<>();
-	
 	public Author() {
 		// TODO Auto-generated constructor stub
 	}
@@ -38,7 +35,6 @@ public class Author {
 		this.authorName = authorName;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-//		this.books = books;
 	}
 
 	public Integer getAuthorId() {

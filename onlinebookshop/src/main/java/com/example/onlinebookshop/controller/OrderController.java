@@ -57,6 +57,11 @@ public class OrderController {
 	public List<Order> getAllOrdersByUsername(@PathVariable String username) {
 		return orderService.findOrderByUsername(username);
 	}
+	
+	@GetMapping("orders/date-descending")
+	public List<Order> getAllOrderInDateDesceding() {
+		return orderService.findOrderByOrderDateDesc();
+	}
 
 	@GetMapping("orders/{id}")
 	public Optional<Order> retrieveOrder(@PathVariable Long id) {

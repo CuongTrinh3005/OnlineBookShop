@@ -69,10 +69,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests().antMatchers("/api/auth/**").permitAll()
             .antMatchers("/api/public/**").permitAll()
             .anyRequest().authenticated();
-//        http
-//        .logout()
-//            .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout")).logoutSuccessUrl("/api/auth/signin");
-        http.logout().logoutUrl("api/logout").invalidateHttpSession(true);
+
+//        http.logout().logoutUrl("api/logout").invalidateHttpSession(true);
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

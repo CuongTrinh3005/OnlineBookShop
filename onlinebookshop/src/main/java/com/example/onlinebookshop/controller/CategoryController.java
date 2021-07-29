@@ -38,15 +38,6 @@ public class CategoryController {
 		return categoryService.findById(id);
 	}
 
-//	@PreAuthorize("hasRole('ADMIN')")
-//	@PostMapping("categories")
-//	public Category saveCategory(@Valid @RequestBody Category category) {
-//		Boolean existed = categoryService.existsById(category.getCategoryId());
-//		if(existed) throw new ResourceAlreadyExistedException("Resource already existed");
-//		
-//		return categoryService.saveCategory(category);
-//	}
-	
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("categories")
 	public ResponseEntity<Category> saveCategory(@Valid @RequestBody Category category) {

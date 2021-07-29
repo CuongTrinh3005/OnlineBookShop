@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.onlinebookshop.model.OrderDetail;
-import com.example.onlinebookshop.model.Rating;
 import com.example.onlinebookshop.model.OrderDetail.OrderDetailID;
 
 

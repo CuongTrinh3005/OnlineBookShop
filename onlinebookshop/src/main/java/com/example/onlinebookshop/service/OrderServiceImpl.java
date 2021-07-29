@@ -44,4 +44,11 @@ public class OrderServiceImpl implements OrderService {
 		
 		return saveOrder(existedOrder);
 	}
+
+	@Override
+	public List<Order> findOrderByOrderDateDesc() {
+		return orderRepository.findAllByOrderByOrderDateDesc();
+	}
+	
+	
 }

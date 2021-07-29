@@ -32,7 +32,7 @@ public class Order {
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Date orderDate;
-//	private String customerId;
+
 	@Column(name="order_address")
 	@NotBlank
 	private String orderAddress;

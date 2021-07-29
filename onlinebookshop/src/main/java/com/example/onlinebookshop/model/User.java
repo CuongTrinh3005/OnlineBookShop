@@ -36,7 +36,7 @@ public class User {
 	private String username;
 	@Column(name="password")
 	@JsonIgnore
-//	@Size(min=4, max = 100)
+
 	private String password;
 	@Column(name="full_name")
 	@NotBlank

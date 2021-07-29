@@ -10,4 +10,5 @@ import com.example.onlinebookshop.model.Order;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 	List<Order> findOrderByUser_Username(String username);
+	List<Order> findAllByOrderByOrderDateDesc();
 }

@@ -32,8 +32,6 @@ public class BookDTO {
 	private String publisherName;
 	@Size(min = 1)
 	private String[] authorIds = new String[0];
-	// private String[] orderDetailIds = new String[0];
-//	private String[] ratingIds = new String[0];
 
 	public BookDTO() {
 
@@ -41,8 +39,7 @@ public class BookDTO {
 
 	public BookDTO(Long bookId, String bookName, Float unitPrice, Long quantity, Float discount, byte[] photo,
 			String description, String specification, Long viewCount, Boolean special, Boolean available,
-			String categoryName, String publisherName, String[] authorIds/*,
-			 String[] orderDetailIds,  String[] ratingIds*/) {
+			String categoryName, String publisherName, String[] authorIds) {
 		super();
 		this.bookId = bookId;
 		this.bookName = bookName;
@@ -58,8 +55,6 @@ public class BookDTO {
 		this.categoryName = categoryName;
 		this.publisherName = publisherName;
 		this.authorIds = authorIds;
-		// this.orderDetailIds = orderDetailIds;
-//		this.ratingIds = ratingIds;
 	}
 
 	public Long getBookId() {
@@ -173,20 +168,4 @@ public class BookDTO {
 	public void setAuthorIds(String[] authorIds) {
 		this.authorIds = authorIds;
 	}
-
-//	public String[] getOrderDetailIds() {
-//		return orderDetailIds;
-//	}
-//
-//	public void setOrderDetailIds(String[] orderDetailIds) {
-//		this.orderDetailIds = orderDetailIds;
-//	}
-
-//	public String[] getRatingIds() {
-//		return ratingIds;
-//	}
-//
-//	public void setRatingIds(String[] ratingIds) {
-//		this.ratingIds = ratingIds;
-//	}
 }

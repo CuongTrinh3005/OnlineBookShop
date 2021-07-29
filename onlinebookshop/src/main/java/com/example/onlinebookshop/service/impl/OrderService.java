@@ -7,6 +7,7 @@ import com.example.onlinebookshop.model.Order;
 
 public interface OrderService {
 	List<Order> findOrderByUsername(String username);
+	List<Order> findOrderByOrderDateDesc();
 	Optional<Order> findOrderById(Long id);
 	Order saveOrder(Order order);
 	Order updateOrder(Order order, Long id);

@@ -21,5 +21,4 @@ public interface BookService{
 	List<Book> getListBookByDateInDesc();
 	List<Book> getListBookByDiscountDesc();
 	List<Book> getListBookByAscendingOrder();
-//	Boolean updateBookQuantity(Long id, int quantity);
 }
