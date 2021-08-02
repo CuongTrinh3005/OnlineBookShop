@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.onlinebookshop.OnlinebookshopApplication;
+import com.example.onlinebookshop.exception.CustomException;
 import com.example.onlinebookshop.model.Role;
 import com.example.onlinebookshop.model.RoleName;
 import com.example.onlinebookshop.model.User;
@@ -92,8 +94,12 @@ public class AuthController {
 		}
 
 		// Create new user's account
-		User user = new User(signUpRequest.getUsername(), signUpRequest.getUsername(), signUpRequest.getEmail(),
-				encoder.encode(signUpRequest.getPassword()));
+		if(!OnlinebookshopApplication.verifyPhoneNumber(signUpRequest.getPhoneNumber())){
+			throw new CustomException("Phone number is invalid!");
+		}
+		
+		User user = new User(signUpRequest.getUsername(), signUpRequest.getFullName(), signUpRequest.getEmail(),
+				encoder.encode(signUpRequest.getPassword()), signUpRequest.getPhoneNumber());
 
 		Set<String> strRoles = signUpRequest.getRole();
 		Set<Role> roles = new HashSet<>();

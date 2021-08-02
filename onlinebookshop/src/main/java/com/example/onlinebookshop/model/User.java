@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User {
 	@Id
 	@Column(name="username")
-	@Size(min=3, max = 30)
+	@Size(min=3, max = 40)
 	private String username;
 	@Column(name="password")
 	@JsonIgnore
@@ -92,11 +92,12 @@ public class User {
 		this.roles = roles;
 	}
 	
-	public User(String userName, String fullName, String email, String password) {
+	public User(String userName, String fullName, String email, String password, String phoneNumber) {
         this.username = userName;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
+        this.phoneNumber = phoneNumber;
     }
 
 	public String getUserName() {

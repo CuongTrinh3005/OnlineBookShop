@@ -26,6 +26,16 @@ public class OnlinebookshopApplication {
 		return listInt;
 	}
 	
+	public static Boolean verifyPhoneNumber(String phoneNumber){
+		char[] chars = phoneNumber.toCharArray();
+	      for(char c : chars){
+	         if(!Character.isDigit(c)){
+	            return false;
+	         }
+	      }
+	      return true;
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(OnlinebookshopApplication.class, args);
 		System.out.println("This is my assignment to build e-commerce webapp");
