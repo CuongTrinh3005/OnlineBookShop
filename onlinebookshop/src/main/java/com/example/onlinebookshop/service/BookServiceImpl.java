@@ -160,28 +160,28 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Book updateBook(BookDTO bookDTO, Long id) {
-		Book book = getBookById(id).get();
-		BookDTO existedBookDTO = convertBookToDTO(book);
+		Book existingBook = getBookById(id).get();
 		
-		existedBookDTO.setBookName(bookDTO.getBookName());
-		existedBookDTO.setCategoryName(bookDTO.getCategoryName());
-		existedBookDTO.setDescription(bookDTO.getDescription());
-		existedBookDTO.setDiscount(bookDTO.getDiscount());
-		existedBookDTO.setAvailable(bookDTO.getAvailable());
-		existedBookDTO.setPhoto(bookDTO.getPhoto());
-		existedBookDTO.setPublisherName(bookDTO.getPublisherName());
-		existedBookDTO.setQuantity(bookDTO.getQuantity());
-		existedBookDTO.setUnitPrice(bookDTO.getUnitPrice());
-		existedBookDTO.setSpecial(bookDTO.getSpecial());
-		existedBookDTO.setSpecification(bookDTO.getSpecification());
-		existedBookDTO.setViewCount(bookDTO.getViewCount());
-		existedBookDTO.setAuthorIds(bookDTO.getAuthorIds());
+		Book updateBook = convertBookDtoToBook(bookDTO);
+		existingBook.setBookName(updateBook.getBookName());
+		existingBook.setCategory(updateBook.getCategory());
+		existingBook.setDescription(updateBook.getDescription());
+		existingBook.setDiscount(updateBook.getDiscount());
+		existingBook.setAvailable(updateBook.getAvailable());
+		existingBook.setPhoto(updateBook.getPhoto());
+		existingBook.setPublisher(updateBook.getPublisher());
+		existingBook.setQuantity(updateBook.getQuantity());
+		existingBook.setUnitPrice(updateBook.getUnitPrice());
+		existingBook.setSpecial(updateBook.getSpecial());
+		existingBook.setSpecification(updateBook.getSpecification());
+		existingBook.setViewCount(updateBook.getViewCount());
+		existingBook.setAuthors(updateBook.getAuthors());
 		
-		Book updatingBook = convertBookDtoToBook(existedBookDTO);
-		updatingBook.setBookId(id);
-		updatingBook.setDateUpdate(new Date());
+		existingBook.setDateUpdate(new Date());
+		final long vietNameLocalTime = 7L * 60L * 60L * 1000L;
+		existingBook.setDateIn(new Date(existingBook.getDateIn().getTime()+ vietNameLocalTime));
 		
-		return bookRepository.save(updatingBook);
+		return bookRepository.save(existingBook);
 	}
 
 	@Override

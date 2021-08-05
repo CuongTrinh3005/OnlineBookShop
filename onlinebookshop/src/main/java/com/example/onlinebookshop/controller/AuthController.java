@@ -86,16 +86,21 @@ public class AuthController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+//			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+			throw new CustomException("Username is already taken!");
 		}
 
 		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+//			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+			throw new CustomException("Email is already in use!");
 		}
 
 		// Create new user's account
 		if(!OnlinebookshopApplication.verifyPhoneNumber(signUpRequest.getPhoneNumber())){
 			throw new CustomException("Phone number is invalid!");
+		}
+		else if(signUpRequest.getPhoneNumber().length()<8 || signUpRequest.getPhoneNumber().length()>14){
+			throw new CustomException("Phone number length is in range 8 - 14!");
 		}
 		
 		User user = new User(signUpRequest.getUsername(), signUpRequest.getFullName(), signUpRequest.getEmail(),

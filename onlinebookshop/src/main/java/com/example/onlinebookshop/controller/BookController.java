@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.Validator;
@@ -59,6 +60,7 @@ public class BookController {
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
+	@Transactional
 	@PutMapping("books/{id}")
 	public ResponseEntity<Book> updateBook(@Valid @RequestBody BookDTO bookDTO, @PathVariable Long id) {
 		Set<ConstraintViolation<BookDTO>> result = validator.validate(bookDTO);
