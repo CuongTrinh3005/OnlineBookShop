@@ -68,6 +68,7 @@ public class OrderController {
 		return orderService.findOrderById(id);
 	}
 
+	@SuppressWarnings("null")
 	@PostMapping("orders")
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public ResponseEntity<Order> saveOrder(@Valid @RequestBody Order order, @RequestParam String username) {
@@ -98,6 +99,7 @@ public class OrderController {
 			long quantityLeft = book.getQuantity() - detail.getQuantityOrder();
 			book.setQuantity(quantityLeft);
 			BookDTO bookDTO = bookService.convertBookToDTO(book);
+			
 			bookService.updateBook(bookDTO, bookDTO.getBookId());
 			orderDetailService.saveOrderDetail(detail);
 		}

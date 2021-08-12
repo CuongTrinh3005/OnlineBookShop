@@ -178,8 +178,10 @@ public class BookServiceImpl implements BookService {
 		existingBook.setAuthors(updateBook.getAuthors());
 		
 		existingBook.setDateUpdate(new Date());
-		final long vietNameLocalTime = 7L * 60L * 60L * 1000L;
-		existingBook.setDateIn(new Date(existingBook.getDateIn().getTime()+ vietNameLocalTime));
+		if(existingBook.getDateIn()!=null){
+			final long vietNameLocalTime = 7L * 60L * 60L * 1000L;
+			existingBook.setDateIn(new Date(existingBook.getDateIn().getTime()+ vietNameLocalTime));
+		}
 		
 		return bookRepository.save(existingBook);
 	}
