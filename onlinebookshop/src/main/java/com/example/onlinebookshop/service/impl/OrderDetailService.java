@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.example.onlinebookshop.model.OrderDetail;
 import com.example.onlinebookshop.model.OrderDetail.OrderDetailID;
+import com.example.onlinebookshop.model.dto.OrderDetailDTO;
 
 
 public interface OrderDetailService {
@@ -12,4 +13,5 @@ public interface OrderDetailService {
 	List<OrderDetail> findAllById(List<OrderDetailID> listOrderDetailId);
 	OrderDetail saveOrderDetail(OrderDetail detail);
 	List<OrderDetail> getAllOrderDetailByOrderId(Long orderId);
+	List<OrderDetailDTO> convertToDTO(List<OrderDetail> orderDetails);
 }

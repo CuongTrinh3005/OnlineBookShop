@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.onlinebookshop.model.OrderDetail;
 import com.example.onlinebookshop.model.OrderDetail.OrderDetailID;
+import com.example.onlinebookshop.model.dto.OrderDetailDTO;
+import com.example.onlinebookshop.service.impl.BookService;
 import com.example.onlinebookshop.service.impl.OrderDetailService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -20,6 +22,9 @@ import com.example.onlinebookshop.service.impl.OrderDetailService;
 public class OrderDetailController {
 	@Autowired
 	OrderDetailService orderDetailService;
+	
+	@Autowired
+	BookService bookService;
 	
 	@GetMapping("order_details")
 	public List<OrderDetail> getAllOrderDetails(){
@@ -38,7 +43,8 @@ public class OrderDetailController {
 	}
 
 	@GetMapping("order_details/{orderid}")
-	public List<OrderDetail> getOrderDetail(@PathVariable Long orderid){
-		return orderDetailService.getAllOrderDetailByOrderId(orderid);	
+	public List<OrderDetailDTO> getOrderDetail(@PathVariable Long orderid){
+		List<OrderDetail> details = orderDetailService.getAllOrderDetailByOrderId(orderid);	
+		return orderDetailService.convertToDTO(details);
 	}
 }

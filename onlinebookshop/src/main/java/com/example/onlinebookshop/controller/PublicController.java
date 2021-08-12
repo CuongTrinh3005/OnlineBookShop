@@ -90,14 +90,6 @@ public class PublicController {
 				.collect(Collectors.toList());		
 	}
 	
-	@GetMapping("books/get-name/{id}")
-	public String getBookNameById(@PathVariable Long id){
-		Book book = bookService.getBookById(id).get();
-		if(book!=null) return book.getBookName();
-		
-		return "";
-	}
-	
 	@GetMapping("ratings/books/{id}")
 	public List<Rating> getBookRatings(@PathVariable Long id){
 		return ratingService.getAllRatingByBookId(id);
