@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.onlinebookshop.exception.CustomException;
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.model.User;
-import com.example.onlinebookshop.model.dto.UserDTOString;
+import com.example.onlinebookshop.model.dto.UserDTORoleString;
 import com.example.onlinebookshop.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -30,7 +30,7 @@ public class AdminController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("users")
-	public List<UserDTOString> getAllUsers() {
+	public List<UserDTORoleString> getAllUsers() {
 		return userService.getAllUsers().stream().map(userService::convertUserToUserDTOString)
 				.collect(Collectors.toList());
 	} 

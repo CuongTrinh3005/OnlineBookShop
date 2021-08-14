@@ -49,11 +49,11 @@ public class User {
 	@Column(name="phone_number")
 	@Size(min=8, max = 14)
 	private String phoneNumber;
-	@NaturalId
+	@NaturalId(mutable=true)
 	@NotBlank
 	@Size(max = 50)
     @Email
-	@Column(name="email")
+	@Column(name="email", unique=true)
 	private String email;
 	@Column(name="photo")
 	private byte[] photo;

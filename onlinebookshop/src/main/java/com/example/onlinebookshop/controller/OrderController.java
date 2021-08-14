@@ -33,6 +33,7 @@ import com.example.onlinebookshop.model.OrderDetail;
 import com.example.onlinebookshop.model.User;
 import com.example.onlinebookshop.model.dto.BookDTO;
 import com.example.onlinebookshop.service.BookService;
+import com.example.onlinebookshop.service.EmailService;
 import com.example.onlinebookshop.service.OrderDetailService;
 import com.example.onlinebookshop.service.OrderService;
 import com.example.onlinebookshop.service.UserService;
@@ -52,6 +53,9 @@ public class OrderController {
 	
 	@Autowired
 	BookService bookService;
+	
+	@Autowired
+	EmailService emailService;
 
 	@GetMapping("list/orders/{username}")
 	public List<Order> getAllOrdersByUsername(@PathVariable String username) {
@@ -68,42 +72,56 @@ public class OrderController {
 		return orderService.findOrderById(id);
 	}
 
-	@SuppressWarnings("null")
 	@PostMapping("orders")
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public ResponseEntity<Order> saveOrder(@Valid @RequestBody Order order, @RequestParam String username) {
-		User user = userService.findByUserName(username).get();
+		Order newOrder = new Order();
+		try{
+			User user = userService.findByUserName(username).get();
 
-		order.setUser(user);
-		if (order.getOrderDate() == null)
-			order.setOrderDate(new Date());
+			order.setUser(user);
+			if (order.getOrderDate() == null)
+				order.setOrderDate(new Date());
 
-		Order newOrder = orderService.saveOrder(order);
+			newOrder = orderService.saveOrder(order);
 
-		// Save order details
-		Collection<OrderDetail> details = order.getOrderDetail();
-		List<OrderDetail> listDetails = new ArrayList<OrderDetail>();
-		listDetails.addAll(details);
-		
-		for (OrderDetail detail : listDetails) {
-			detail.getOrderDetailID().setOrderId(newOrder.getOrderId());
+			// Save order details
+			Collection<OrderDetail> details = order.getOrderDetail();
+			List<OrderDetail> listDetails = new ArrayList<OrderDetail>();
+			listDetails.addAll(details);
 			
-			Book book = bookService.getBookById(detail.getOrderDetailID().getBookId()).get();
+			for (OrderDetail detail : listDetails) {
+				detail.getOrderDetailID().setOrderId(newOrder.getOrderId());
+				
+				Book book = bookService.getBookById(detail.getOrderDetailID().getBookId()).get();
+				
+				if(book.getQuantity() < detail.getQuantityOrder())
+					throw new CustomException("Not enough quantity");
+				
+				if(book.getAvailable()==null || !book.getAvailable())
+					throw new CustomException("Book can not be sold");
+				
+				long quantityLeft = book.getQuantity() - detail.getQuantityOrder();
+				book.setQuantity(quantityLeft);
+				BookDTO bookDTO = bookService.convertBookToDTO(book);
+				
+				bookService.updateBook(bookDTO, bookDTO.getBookId());
+				orderDetailService.saveOrderDetail(detail);
+			}
 			
-			if(book.getQuantity() < detail.getQuantityOrder())
-				throw new CustomException("Not enough quantity");
+			// send confirm email
+			Float totalPrice = orderDetailService.getTotalPrice(listDetails);
+			String confirmBody = orderService.composeConfirmOrder(listDetails, new Date(), totalPrice);
+			String to = user.getEmail();
+			String subject = "Order confirmation";
 			
-			if(book.getAvailable()==null || !book.getAvailable())
-				throw new CustomException("Book can not be sold");
-			
-			long quantityLeft = book.getQuantity() - detail.getQuantityOrder();
-			book.setQuantity(quantityLeft);
-			BookDTO bookDTO = bookService.convertBookToDTO(book);
-			
-			bookService.updateBook(bookDTO, bookDTO.getBookId());
-			orderDetailService.saveOrderDetail(detail);
+			emailService.sendSimpleMessage(to, subject, confirmBody);
 		}
-
+		catch(Exception ex){
+			ex.printStackTrace();
+			System.err.println(ex.getMessage());
+		}
+		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(newOrder.getOrderId()).toUri();
 

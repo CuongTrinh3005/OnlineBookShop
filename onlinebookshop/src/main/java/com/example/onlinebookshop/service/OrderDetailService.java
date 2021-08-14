@@ -14,4 +14,5 @@ public interface OrderDetailService {
 	OrderDetail saveOrderDetail(OrderDetail detail);
 	List<OrderDetail> getAllOrderDetailByOrderId(Long orderId);
 	List<OrderDetailDTO> convertToDTO(List<OrderDetail> orderDetails);
+	Float getTotalPrice(List<OrderDetail> details);
 }

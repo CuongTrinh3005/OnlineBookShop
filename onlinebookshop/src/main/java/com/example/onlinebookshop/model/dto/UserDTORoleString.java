@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
-public class UserDTOString {
+public class UserDTORoleString {
 	private String username;
 	@Size(min=4, max = 100)
 	private String password;
@@ -28,11 +28,11 @@ public class UserDTOString {
 	private byte[] photo;
 	private String roles ;
 	
-	public UserDTOString() {
+	public UserDTORoleString() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserDTOString(String username, @Size(min = 4, max = 100) String password,
+	public UserDTORoleString(String username, @Size(min = 4, max = 100) String password,
 			@NotBlank @Size(min = 3, max = 50) String fullName, @NotBlank @Size(max = 50) @Email String email,
 			@Size(max = 50) String address, @Size(max = 50) String phoneNumber, Boolean gender, byte[] photo,
 			String roles) {

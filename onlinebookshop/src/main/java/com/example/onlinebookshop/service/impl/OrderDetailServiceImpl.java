@@ -62,6 +62,14 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 		}
 		return listDto;
 	}
-	
-	
+
+	@Override
+	public Float getTotalPrice(List<OrderDetail> details) {
+		float totalOrder = 0;
+		for (OrderDetail detail : details) {
+			Float itemPrice = detail.getQuantityOrder() * detail.getUnitPrice() * (1-detail.getDiscount());
+			totalOrder += itemPrice;
+		}
+		return totalOrder;
+	}
 }

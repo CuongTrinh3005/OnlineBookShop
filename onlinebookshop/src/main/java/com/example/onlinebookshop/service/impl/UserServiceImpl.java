@@ -18,7 +18,7 @@ import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.model.Role;
 import com.example.onlinebookshop.model.User;
 import com.example.onlinebookshop.model.dto.UserDTO;
-import com.example.onlinebookshop.model.dto.UserDTOString;
+import com.example.onlinebookshop.model.dto.UserDTORoleString;
 import com.example.onlinebookshop.repository.UserRepository;
 import com.example.onlinebookshop.service.EmailService;
 import com.example.onlinebookshop.service.RoleService;
@@ -94,10 +94,10 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public UserDTOString convertUserToUserDTOString(User user) {
+	public UserDTORoleString convertUserToUserDTOString(User user) {
 		if(user == null)	throw new ResourceNotFoundException("Do not have user's data");
 		
-		UserDTOString userdstr = new UserDTOString();
+		UserDTORoleString userdstr = new UserDTORoleString();
 		userdstr.setUsername(user.getUserName());
 		userdstr.setFullName(user.getFullName());
 		userdstr.setEmail(user.getEmail());
@@ -137,6 +137,7 @@ public class UserServiceImpl implements UserService {
 		existedUser.setGender(user.getGender());
 		existedUser.setPhoneNumber(user.getPhoneNumber());
 		existedUser.setAddress(user.getAddress());
+		existedUser.setEmail(user.getEmail());
 		existedUser.setPhoto(user.getPhoto());
 		existedUser.setRoles(user.getRoles());
 		
