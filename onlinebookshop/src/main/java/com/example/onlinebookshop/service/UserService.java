@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.service.impl;
+package com.example.onlinebookshop.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,4 +27,6 @@ public interface UserService {
 	UserDTOString convertUserToUserDTOString(User user);
 	User createNewUser(UserDTO userDTO);
 	User updateUser(UserDTO userDTO, String username);
+	Boolean changePassword(String username, String oldPassword, String newPassword);
+	Boolean resetPassword(String username);
 }

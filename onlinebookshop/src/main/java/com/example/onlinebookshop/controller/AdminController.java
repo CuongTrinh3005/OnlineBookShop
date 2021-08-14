@@ -18,7 +18,7 @@ import com.example.onlinebookshop.exception.CustomException;
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.model.User;
 import com.example.onlinebookshop.model.dto.UserDTOString;
-import com.example.onlinebookshop.service.impl.UserService;
+import com.example.onlinebookshop.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

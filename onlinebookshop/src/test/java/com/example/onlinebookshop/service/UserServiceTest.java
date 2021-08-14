@@ -17,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.example.onlinebookshop.model.User;
 import com.example.onlinebookshop.repository.UserRepository;
+import com.example.onlinebookshop.service.impl.UserServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {

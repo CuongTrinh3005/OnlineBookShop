@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -32,8 +33,9 @@ import com.example.onlinebookshop.model.Role;
 import com.example.onlinebookshop.model.User;
 
 import com.example.onlinebookshop.model.dto.UserDTO;
-import com.example.onlinebookshop.service.impl.RoleService;
-import com.example.onlinebookshop.service.impl.UserService;
+import com.example.onlinebookshop.payload.request.ChangePasswordRequest;
+import com.example.onlinebookshop.service.RoleService;
+import com.example.onlinebookshop.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -89,5 +91,14 @@ public class UserController {
                                     .toUri();
         
         return ResponseEntity.created(location).build();
+	}
+	
+	@PostMapping("users/change-password")
+	public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordReq){
+		Boolean success = userService.changePassword(changePasswordReq.getUsername(), changePasswordReq.getCurrentPassword()
+				, changePasswordReq.getNewPassword());
+		
+		return (success)? ResponseEntity.ok().body("Change password successfully!")
+		    	: ResponseEntity.ok().body("Change password failed!");
 	}
 }

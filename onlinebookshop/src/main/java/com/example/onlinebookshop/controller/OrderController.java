@@ -32,10 +32,10 @@ import com.example.onlinebookshop.model.Order;
 import com.example.onlinebookshop.model.OrderDetail;
 import com.example.onlinebookshop.model.User;
 import com.example.onlinebookshop.model.dto.BookDTO;
-import com.example.onlinebookshop.service.impl.BookService;
-import com.example.onlinebookshop.service.impl.OrderDetailService;
-import com.example.onlinebookshop.service.impl.OrderService;
-import com.example.onlinebookshop.service.impl.UserService;
+import com.example.onlinebookshop.service.BookService;
+import com.example.onlinebookshop.service.OrderDetailService;
+import com.example.onlinebookshop.service.OrderService;
+import com.example.onlinebookshop.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

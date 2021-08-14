@@ -23,8 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.onlinebookshop.model.User;
-
-import com.example.onlinebookshop.service.impl.UserService;
+import com.example.onlinebookshop.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

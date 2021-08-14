@@ -29,8 +29,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.example.onlinebookshop.controller.CategoryController;
 import com.example.onlinebookshop.model.Category;
-
-import com.example.onlinebookshop.service.impl.CategoryService;
+import com.example.onlinebookshop.service.CategoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)

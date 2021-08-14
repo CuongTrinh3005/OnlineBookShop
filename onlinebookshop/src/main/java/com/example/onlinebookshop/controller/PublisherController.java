@@ -24,8 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.onlinebookshop.exception.CustomException;
 import com.example.onlinebookshop.model.Author;
 import com.example.onlinebookshop.model.Publisher;
-
-import com.example.onlinebookshop.service.impl.PublisherService;
+import com.example.onlinebookshop.service.PublisherService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

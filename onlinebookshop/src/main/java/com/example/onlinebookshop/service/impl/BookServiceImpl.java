@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.service;
+package com.example.onlinebookshop.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,9 +18,9 @@ import com.example.onlinebookshop.model.Publisher;
 import com.example.onlinebookshop.model.dto.BookDTO;
 import com.example.onlinebookshop.repository.BookRepository;
 import com.example.onlinebookshop.repository.CategoryRepository;
-import com.example.onlinebookshop.service.impl.AuthorService;
-import com.example.onlinebookshop.service.impl.BookService;
-import com.example.onlinebookshop.service.impl.PublisherService;
+import com.example.onlinebookshop.service.AuthorService;
+import com.example.onlinebookshop.service.BookService;
+import com.example.onlinebookshop.service.PublisherService;
 
 @Service
 public class BookServiceImpl implements BookService {

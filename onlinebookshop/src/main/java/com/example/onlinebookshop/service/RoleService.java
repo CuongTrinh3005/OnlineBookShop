@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.service.impl;
+package com.example.onlinebookshop.service;
 
 import java.util.List;
 

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.onlinebookshop.model.OrderDetail;
 import com.example.onlinebookshop.model.OrderDetail.OrderDetailID;
 import com.example.onlinebookshop.model.dto.OrderDetailDTO;
-import com.example.onlinebookshop.service.impl.BookService;
-import com.example.onlinebookshop.service.impl.OrderDetailService;
+import com.example.onlinebookshop.service.BookService;
+import com.example.onlinebookshop.service.OrderDetailService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

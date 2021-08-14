@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +23,14 @@ import com.example.onlinebookshop.model.Category;
 import com.example.onlinebookshop.model.Publisher;
 import com.example.onlinebookshop.model.Rating;
 import com.example.onlinebookshop.model.dto.BookDTO;
-import com.example.onlinebookshop.service.impl.AuthorService;
-import com.example.onlinebookshop.service.impl.BookService;
-import com.example.onlinebookshop.service.impl.CategoryService;
-import com.example.onlinebookshop.service.impl.PublisherService;
-import com.example.onlinebookshop.service.impl.RatingService;
+import com.example.onlinebookshop.payload.request.ChangePasswordRequest;
+import com.example.onlinebookshop.service.AuthorService;
+import com.example.onlinebookshop.service.BookService;
+import com.example.onlinebookshop.service.CategoryService;
+import com.example.onlinebookshop.service.EmailService;
+import com.example.onlinebookshop.service.PublisherService;
+import com.example.onlinebookshop.service.RatingService;
+import com.example.onlinebookshop.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -44,10 +50,36 @@ public class PublicController {
 	
 	@Autowired
 	RatingService ratingService;
+	
+	@Autowired
+	EmailService emailService;
+	
+	@Autowired
+	UserService userService;
 
 	@RequestMapping({ "/hello" })
 	public String firstPage() {
 		return "Hello World";
+	}
+	
+	@RequestMapping("/send-email")
+	public Boolean sendEmail(){
+		try{
+			String to = "trinhquoccuong3005@gmail.com";
+			String subject = "Test sending email";
+			String text = "Test sending with config in application.properties!";
+			emailService.sendSimpleMessage(to, subject, text);
+			return true;
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			return false;
+		}
+	}
+	
+	@GetMapping("reset-password")
+	public Boolean resetPassword(@RequestParam String username){
+		return userService.resetPassword(username);
 	}
 	
 	@GetMapping("categories")

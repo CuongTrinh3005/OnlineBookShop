@@ -23,7 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.onlinebookshop.exception.CustomException;
 import com.example.onlinebookshop.exception.ResourceAlreadyExistedException;
 import com.example.onlinebookshop.model.Category;
-import com.example.onlinebookshop.service.impl.CategoryService;
+import com.example.onlinebookshop.service.CategoryService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

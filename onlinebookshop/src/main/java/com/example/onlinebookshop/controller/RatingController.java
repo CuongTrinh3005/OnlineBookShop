@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.onlinebookshop.model.Rating;
 import com.example.onlinebookshop.model.Rating.RatingId;
-import com.example.onlinebookshop.service.impl.RatingService;
+import com.example.onlinebookshop.service.RatingService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

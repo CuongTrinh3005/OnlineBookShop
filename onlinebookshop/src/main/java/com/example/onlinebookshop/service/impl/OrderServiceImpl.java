@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.service;
+package com.example.onlinebookshop.service.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.model.Order;
 import com.example.onlinebookshop.repository.OrderRepository;
-import com.example.onlinebookshop.service.impl.OrderService;
+import com.example.onlinebookshop.service.OrderService;
 
 @Service
 public class OrderServiceImpl implements OrderService {

@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.service;
+package com.example.onlinebookshop.service.impl;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.onlinebookshop.model.Role;
 import com.example.onlinebookshop.repository.RoleRepository;
-import com.example.onlinebookshop.service.impl.RoleService;
+import com.example.onlinebookshop.service.RoleService;
 
 @Service
 public class RoleServiceImpl implements RoleService {

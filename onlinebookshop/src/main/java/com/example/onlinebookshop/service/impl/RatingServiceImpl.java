@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.service;
+package com.example.onlinebookshop.service.impl;
 
 import java.util.Date;
 import java.util.List;
@@ -12,7 +12,7 @@ import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.model.Rating;
 import com.example.onlinebookshop.model.Rating.RatingId;
 import com.example.onlinebookshop.repository.RatingRepository;
-import com.example.onlinebookshop.service.impl.RatingService;
+import com.example.onlinebookshop.service.RatingService;
 
 @Service
 public class RatingServiceImpl implements RatingService {

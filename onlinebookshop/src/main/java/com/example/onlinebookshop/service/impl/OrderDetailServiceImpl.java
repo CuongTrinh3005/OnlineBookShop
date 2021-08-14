@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.service;
+package com.example.onlinebookshop.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import com.example.onlinebookshop.model.OrderDetail.OrderDetailID;
 import com.example.onlinebookshop.model.dto.OrderDetailDTO;
 import com.example.onlinebookshop.repository.BookRepository;
 import com.example.onlinebookshop.repository.OrderDetailRepository;
-import com.example.onlinebookshop.service.impl.OrderDetailService;
+import com.example.onlinebookshop.service.OrderDetailService;
 
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService{

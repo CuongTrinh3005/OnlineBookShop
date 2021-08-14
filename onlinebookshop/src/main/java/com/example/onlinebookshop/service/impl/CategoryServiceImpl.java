@@ -1,4 +1,4 @@
-package com.example.onlinebookshop.service;
+package com.example.onlinebookshop.service.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
 import com.example.onlinebookshop.model.Category;
 import com.example.onlinebookshop.repository.CategoryRepository;
-import com.example.onlinebookshop.service.impl.CategoryService;
+import com.example.onlinebookshop.service.CategoryService;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
