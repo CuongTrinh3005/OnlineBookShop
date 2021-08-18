@@ -6,9 +6,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.example.onlinebookshop.model.dto.OrderDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,13 +65,14 @@ public class OrderController {
 	}
 	
 	@GetMapping("orders/date-descending")
-	public List<Order> getAllOrderInDateDesceding() {
-		return orderService.findOrderByOrderDateDesc();
+	public List<OrderDTO> getAllOrderInDateDesceding() {
+		return orderService.findOrderByOrderDateDesc().stream()
+				.map(orderService::convertToDTO).collect(Collectors.toList());
 	}
 
 	@GetMapping("orders/{id}")
-	public Optional<Order> retrieveOrder(@PathVariable Long id) {
-		return orderService.findOrderById(id);
+	public OrderDTO retrieveOrder(@PathVariable Long id) {
+		return orderService.convertToDTO(orderService.findOrderById(id).get()) ;
 	}
 
 	@PostMapping("orders")

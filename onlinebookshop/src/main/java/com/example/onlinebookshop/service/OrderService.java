@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.example.onlinebookshop.model.Order;
 import com.example.onlinebookshop.model.OrderDetail;
+import com.example.onlinebookshop.model.dto.OrderDTO;
 
 public interface OrderService {
 	List<Order> findOrderByUsername(String username);
@@ -14,4 +15,5 @@ public interface OrderService {
 	Order saveOrder(Order order);
 	Order updateOrder(Order order, Long id);
 	String composeConfirmOrder(List<OrderDetail> details, Date date, float totalCost);
+	OrderDTO convertToDTO(Order order);
 }

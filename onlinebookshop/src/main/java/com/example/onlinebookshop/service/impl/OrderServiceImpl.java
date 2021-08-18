@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.onlinebookshop.model.dto.OrderDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,5 +85,11 @@ public class OrderServiceImpl implements OrderService {
 		body += "<br>";
 		body += "Hân hạnh phục vụ quý khách !";
 		return body;
+	}
+
+	@Override
+	public OrderDTO convertToDTO(Order order) {
+		return new OrderDTO(order.getOrderId(), order.getOrderDate(), order.getOrderAddress()
+				, order.getDescription(), order.getUser().getUserName(), order.getUser().getFullName());
 	}
 }
