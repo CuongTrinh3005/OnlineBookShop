@@ -13,7 +13,7 @@ public interface OrderService {
 	List<Order> findOrderByOrderDateDesc();
 	Optional<Order> findOrderById(Long id);
 	Order saveOrder(Order order);
-	Order updateOrder(Order order, Long id);
+	Order updateOrder(OrderDTO order, Long id);
 	String composeConfirmOrder(List<OrderDetail> details, Date date, float totalCost);
 	OrderDTO convertToDTO(Order order);
 }

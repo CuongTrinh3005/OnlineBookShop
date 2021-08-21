@@ -107,6 +107,11 @@ public class PublicController {
 	@GetMapping("books/{id}")
 	public Optional<BookDTO> retrieveBook(@PathVariable Long id) {
 		Book book = bookService.getBookById(id).get();
+		book.setViewCount(book.getViewCount()+1);
+
+		BookDTO dto = bookService.convertBookToDTO(book);
+		bookService.updateBook(dto, dto.getBookId());
+
 		return Optional.of(bookService.convertBookToDTO(book));
 	}
 
@@ -121,7 +126,13 @@ public class PublicController {
 		return bookService.getListBookByDiscountDesc().stream().map(bookService::convertBookToDTO)
 				.collect(Collectors.toList());		
 	}
-	
+
+	@GetMapping("books/top-view")
+	public List<BookDTO> getTopViewBooks() {
+		return bookService.getListBookByViewCountDesc().stream().map(bookService::convertBookToDTO)
+				.collect(Collectors.toList());
+	}
+
 	@GetMapping("ratings/books/{id}")
 	public List<Rating> getBookRatings(@PathVariable Long id){
 		return ratingService.getAllRatingByBookId(id);

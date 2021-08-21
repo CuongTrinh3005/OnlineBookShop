@@ -206,4 +206,9 @@ public class BookServiceImpl implements BookService {
 		}
 		return list;
 	}
+
+	@Override
+	public List<Book> getListBookByViewCountDesc() {
+		return bookRepository.findTop10ByOrderByViewCountDesc();
+	}
 }

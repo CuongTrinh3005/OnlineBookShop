@@ -12,4 +12,5 @@ public interface PublisherService {
 	Publisher savePublisher(Publisher publisher);
 	void deletePublisher(Integer id);
 	Publisher updatePublisher(Publisher publisher, Integer id);
+	Boolean existByName(String name);
 }

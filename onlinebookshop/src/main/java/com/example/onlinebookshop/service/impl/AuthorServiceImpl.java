@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
@@ -53,7 +54,7 @@ public class AuthorServiceImpl implements AuthorService {
 
 	@Override
 	public List<Author> getAllAuthors() {
-		return authorRepository.findAll();
+		return authorRepository.findAll(Sort.by(Sort.Direction.ASC, "authorId"));
 	}
 
 	@Override

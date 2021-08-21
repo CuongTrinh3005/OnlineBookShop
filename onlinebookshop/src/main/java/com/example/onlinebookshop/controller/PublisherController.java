@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.example.onlinebookshop.exception.ResourceAlreadyExistedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,9 @@ public class PublisherController {
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("publishers")
 	public ResponseEntity<Author> savePublisher(@Valid @RequestBody Publisher publisher) {
+		Boolean existedName = publisherService.existByName(publisher.getPublisherName());
+		if(existedName) throw new ResourceAlreadyExistedException("Publisher name already existed");
+
 		publisherService.savePublisher(publisher);
 
 		// Create resource location

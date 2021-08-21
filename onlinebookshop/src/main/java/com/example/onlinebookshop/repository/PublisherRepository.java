@@ -8,4 +8,5 @@ import com.example.onlinebookshop.model.Publisher;
 @Repository
 public interface PublisherRepository extends JpaRepository<Publisher, Integer> {
 	Publisher findByPublisherName(String publisherName);
+	Boolean existsByPublisherName(String publisherName);
 }

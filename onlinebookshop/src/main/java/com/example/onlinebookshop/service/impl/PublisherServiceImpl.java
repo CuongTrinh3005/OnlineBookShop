@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.onlinebookshop.exception.ResourceNotFoundException;
@@ -26,7 +27,7 @@ public class PublisherServiceImpl implements PublisherService{
 
 	@Override
 	public List<Publisher> getAllPublishers() {
-		return publisherRepository.findAll();
+		return publisherRepository.findAll(Sort.by(Sort.Direction.ASC, "publisherId"));
 	}
 
 	@Override
@@ -57,5 +58,10 @@ public class PublisherServiceImpl implements PublisherService{
 	@Override
 	public void deletePublisher(Integer id) {
 		publisherRepository.deleteById(id);
+	}
+
+	@Override
+	public Boolean existByName(String name) {
+		return publisherRepository.existsByPublisherName(name);
 	}
 }

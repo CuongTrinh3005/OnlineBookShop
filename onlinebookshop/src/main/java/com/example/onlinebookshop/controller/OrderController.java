@@ -134,7 +134,7 @@ public class OrderController {
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("orders/{id}")
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public ResponseEntity<Order> updateOrder(@Valid @RequestBody Order order, @PathVariable Long id) {
+	public ResponseEntity<Order> updateOrder(@Valid @RequestBody OrderDTO order, @PathVariable Long id) {
 		return new ResponseEntity<Order>(orderService.updateOrder(order, id), HttpStatus.OK);
 	}
 }

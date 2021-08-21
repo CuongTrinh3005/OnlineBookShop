@@ -19,17 +19,19 @@ public class OrderDTO {
 
     private String customerId;
     private String customerFullName;
+    private String status;
 
 //    public OrderDTO(){}
 
     public OrderDTO(Long orderId, Date orderDate, String orderAddress, String description, String customerId
-                    , String customerFullName) {
+                    , String customerFullName, String status) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.orderAddress = orderAddress;
         this.description = description;
         this.customerId = customerId;
         this.customerFullName = customerFullName;
+        this.status = status;
     }
 
     public Long getOrderId() {
@@ -78,5 +80,13 @@ public class OrderDTO {
 
     public void setCustomerFullName(String customerFullName) {
         this.customerFullName = customerFullName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
