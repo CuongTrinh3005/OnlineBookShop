@@ -22,4 +22,5 @@ public interface BookService{
 	List<Book> getListBookByDiscountDesc();
 	List<Book> getListBookByViewCountDesc();
 	List<Book> getListBookByAscendingOrder();
+	List<Book> getListBestSellingBook(int offset, int limit);
 }

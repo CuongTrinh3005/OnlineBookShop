@@ -7,6 +7,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.onlinebookshop.OnlinebookshopApplication;
@@ -210,5 +213,10 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Book> getListBookByViewCountDesc() {
 		return bookRepository.findTop10ByOrderByViewCountDesc();
+	}
+
+	@Override
+	public List<Book> getListBestSellingBook(int offset, int limit) {
+		return bookRepository.findTopBestSellingBook(PageRequest.of(offset, limit));
 	}
 }

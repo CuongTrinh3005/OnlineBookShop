@@ -133,6 +133,12 @@ public class PublicController {
 				.collect(Collectors.toList());
 	}
 
+	@GetMapping("books/best-selling")
+	public List<BookDTO> getTopBestSellingBooks() {
+		return bookService.getListBestSellingBook(0,10).stream().map(bookService::convertBookToDTO)
+				.collect(Collectors.toList());
+	}
+
 	@GetMapping("ratings/books/{id}")
 	public List<Rating> getBookRatings(@PathVariable Long id){
 		return ratingService.getAllRatingByBookId(id);
