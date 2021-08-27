@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.example.onlinebookshop.model.Rating;
 import com.example.onlinebookshop.model.Rating.RatingId;
+import com.example.onlinebookshop.model.dto.RatingDTO;
 
 public interface RatingService {
 	List<Rating> getAllRatings();
@@ -13,4 +14,6 @@ public interface RatingService {
 	Rating updateRating(Rating rating);
 	List<Rating> getAllRatingByUserName(String username);
 	List<Rating> getAllRatingByBookId(Long bookId);
+	Boolean checkRatingExist(RatingId ratingId);
+	RatingDTO convertToDTO(Rating rating);
 }

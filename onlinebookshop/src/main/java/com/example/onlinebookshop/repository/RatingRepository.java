@@ -12,4 +12,5 @@ import com.example.onlinebookshop.model.Rating.RatingId;
 public interface RatingRepository extends JpaRepository<Rating, RatingId> {
 	List<Rating> findByRatingIdUsername(String username);
 	List<Rating> findByRatingIdBookId(Long bookId);
+	Boolean existsByRatingId(RatingId ratingId);
 }

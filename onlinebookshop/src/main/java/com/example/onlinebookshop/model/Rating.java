@@ -35,6 +35,8 @@ public class Rating {
 	@DecimalMin(value="0")
 	@DecimalMax(value="5")
 	private Float levelRating;
+	@Column(name="comment")
+	private String comment;
 	
 	@Embeddable
 	public static class RatingId implements Serializable{
@@ -83,11 +85,12 @@ public class Rating {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Rating(RatingId ratingId, Date dateRating, Float levelRating, Book book, User user) {
+	public Rating(RatingId ratingId, Date dateRating, Float levelRating, String comment, Book book, User user) {
 		super();
 		this.ratingId = ratingId;
 		this.dateRating = dateRating;
 		this.levelRating = levelRating;
+		this.comment = comment;
 		this.book = book;
 		this.user = user;
 	}
@@ -130,5 +133,13 @@ public class Rating {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 }

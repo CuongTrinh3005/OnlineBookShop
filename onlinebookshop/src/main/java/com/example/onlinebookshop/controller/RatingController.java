@@ -2,9 +2,11 @@ package com.example.onlinebookshop.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.example.onlinebookshop.model.dto.RatingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +34,9 @@ public class RatingController {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("ratings")
-	public List<Rating> getAllRatings(){
-		return ratingService.getAllRatings();
+	public List<RatingDTO> getAllRatings(){
+		return ratingService.getAllRatings().stream().map(ratingService::convertToDTO)
+				.collect(Collectors.toList());
 	}
 
 	@GetMapping("ratings/id")
@@ -60,5 +63,11 @@ public class RatingController {
 	@PutMapping("ratings")
 	public ResponseEntity<Rating> updateRating(@Valid @RequestBody Rating rating) {
 		return new ResponseEntity<Rating>(ratingService.updateRating(rating), HttpStatus.OK);
+	}
+
+	@GetMapping("ratings/check-exist")
+	public Boolean isRatingExist(@RequestParam String username, @RequestParam Long bookId){
+		RatingId ratingId = new RatingId(username, bookId);
+		return ratingService.checkRatingExist(ratingId);
 	}
 }

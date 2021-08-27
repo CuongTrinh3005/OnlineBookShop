@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.onlinebookshop.model.Book;
+import com.example.onlinebookshop.model.dto.RatingDTO;
+import com.example.onlinebookshop.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +21,9 @@ import com.example.onlinebookshop.service.RatingService;
 public class RatingServiceImpl implements RatingService {
 	@Autowired
 	RatingRepository ratingRepository;
+
+	@Autowired
+	BookRepository bookRepository;
 
 	@Override
 	public List<Rating> getAllRatings() {
@@ -43,6 +49,8 @@ public class RatingServiceImpl implements RatingService {
 
 		existedRating.setDateRating(new Date());
 		existedRating.setLevelRating(rating.getLevelRating());
+		existedRating.setComment(rating.getComment());
+
 		return ratingRepository.save(existedRating);
 	}
 
@@ -52,7 +60,21 @@ public class RatingServiceImpl implements RatingService {
 	}
 
 	@Override
+	public Boolean checkRatingExist(RatingId ratingId) {
+		return ratingRepository.existsByRatingId(ratingId);
+	}
+
+	@Override
 	public List<Rating> getAllRatingByBookId(Long bookId) {
 		return ratingRepository.findByRatingIdBookId(bookId);
+	}
+
+	@Override
+	public RatingDTO convertToDTO(Rating rating) {
+		Long bookId = rating.getRatingId().getBookId();
+		Book book = bookRepository.getById(bookId);
+		RatingDTO dto = new RatingDTO(rating.getRatingId().getUsername(), bookId, book.getBookName(),book.getPhoto()
+				,rating.getDateRating(),rating.getLevelRating(), rating.getComment());
+		return dto;
 	}
 }
