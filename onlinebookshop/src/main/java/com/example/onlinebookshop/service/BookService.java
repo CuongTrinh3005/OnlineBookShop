@@ -13,6 +13,7 @@ public interface BookService{
 	List<Book> getBookByAuthorName(String authorName);
 	List<Book> getBookByPublisherName(String publisherName);
 	List<Book> getBookByCategoryName(String categoryName);
+	List<Book> getBookByCategoryId(String categoryId);
 	BookDTO convertBookToDTO(Book book);
 	Book convertBookDtoToBook(BookDTO bookDTO);
 	Book saveBook(BookDTO bookDTO);
@@ -23,4 +24,6 @@ public interface BookService{
 	List<Book> getListBookByViewCountDesc();
 	List<Book> getListBookByAscendingOrder();
 	List<Book> getListBestSellingBook(int offset, int limit);
+	List<Book> getListBookByNameOrGenres(String info);
+	List<Book> getListBookContainsName(String name);
 }

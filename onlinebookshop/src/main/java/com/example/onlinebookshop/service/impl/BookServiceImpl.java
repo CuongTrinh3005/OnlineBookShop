@@ -92,6 +92,14 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	public List<Book> getBookByCategoryId(String categoryId) {
+		List<Book> book = bookRepository.findBookByCategory_CategoryId(categoryId);
+		if (book == null)
+			throw new ResourceNotFoundException("Book with publisher " + categoryId + " not found");
+		return book;
+	}
+
+	@Override
 	public BookDTO convertBookToDTO(Book book) {
 		if (book == null)
 			throw new ResourceNotFoundException("Book is not found!");
@@ -218,5 +226,15 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Book> getListBestSellingBook(int offset, int limit) {
 		return bookRepository.findTopBestSellingBook(PageRequest.of(offset, limit));
+	}
+
+	@Override
+	public List<Book> getListBookByNameOrGenres(String info) {
+		return bookRepository.findByBookNameOrCategory_CategoryName(info, info);
+	}
+
+	@Override
+	public List<Book> getListBookContainsName(String name) {
+		return bookRepository.findByBookNameIgnoreCaseContaining(name);
 	}
 }

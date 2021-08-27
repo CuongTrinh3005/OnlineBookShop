@@ -86,6 +86,11 @@ public class PublicController {
 	public List<Category> getCategories() {
 		return categoryService.getAllCategories();
 	}
+
+	@GetMapping("categories/{id}")
+	public Optional<Category> retrieveCategory(@PathVariable String id) {
+		return categoryService.findById(id);
+	}
 	
 	@GetMapping("categories/search")
 	public Optional<Category> getCategoryByName(@RequestParam String name) {
@@ -153,6 +158,18 @@ public class PublicController {
 	@GetMapping("books/search/category")
 	public List<BookDTO> getBooksByCategoryName(@RequestParam String name) {
 		return bookService.getBookByCategoryName(name).stream().map(bookService::convertBookToDTO)
+				.collect(Collectors.toList());
+	}
+
+	@GetMapping("books/search/")
+	public List<BookDTO> getBooksByInfo(@RequestParam String name) {
+		return bookService.getListBookContainsName(name).stream().map(bookService::convertBookToDTO)
+				.collect(Collectors.toList());
+	}
+
+	@GetMapping("books/category/{id}")
+	public List<BookDTO> getBooksByCategoryId(@PathVariable String id) {
+		return bookService.getBookByCategoryId(id).stream().map(bookService::convertBookToDTO)
 				.collect(Collectors.toList());
 	}
 
