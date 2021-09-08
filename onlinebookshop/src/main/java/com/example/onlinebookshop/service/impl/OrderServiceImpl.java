@@ -81,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
 			body += "Đơn giá: " + detail.getUnitPrice() + " VNĐ \r\n";
 			body += "\r\n";
 			if(detail.getDiscount() > 0){
-				body += "Giảm giá: " + detail.getDiscount() + "\r\n";
+				body += "Giảm giá: " + detail.getDiscount()*100 + "%" + "\r\n";
 				body += "\r\n";
 			}
 			body += "----------------------------------------------------------- \r\n";

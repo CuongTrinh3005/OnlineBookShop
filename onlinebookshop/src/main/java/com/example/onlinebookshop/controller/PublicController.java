@@ -79,7 +79,7 @@ public class PublicController {
 	
 	@GetMapping("reset-password")
 	public Boolean resetPassword(@RequestParam String username){
-		return userService.resetPassword(username);
+		return userService.resetPassword(username.trim());
 	}
 	
 	@GetMapping("categories")

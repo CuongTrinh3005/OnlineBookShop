@@ -21,7 +21,7 @@ public class OrderDTO {
     private String customerFullName;
     private String status;
 
-//    public OrderDTO(){}
+    public OrderDTO(){}
 
     public OrderDTO(Long orderId, Date orderDate, String orderAddress, String description, String customerId
                     , String customerFullName, String status) {
